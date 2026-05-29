@@ -18,4 +18,14 @@ class Trainer extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function serviceBookings()
+    {
+        return $this->hasMany(ServiceBooking::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

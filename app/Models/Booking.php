@@ -24,6 +24,9 @@ class Booking extends Model
     public const STATUS_CONFIRMED = 'confirmed';
     public const STATUS_CANCELLED = 'cancelled';
     public const STATUS_COMPLETED = 'completed';
+    public const STATUS_PAID = 'paid';
+    public const STATUS_FAILED = 'failed';
+    
 
     public function user()
     {
@@ -40,6 +43,16 @@ class Booking extends Model
         return $this->belongsTo(Subscription::class);
     }
 
+    public function isPaid()
+    {
+        return $this->status === self::STATUS_PAID;
+    }
+
+    public function isFailed()
+    {
+        return $this->status === self::STATUS_FAILED;
+    }
+
     public function isConfirmed()
     {
         return $this->status === self::STATUS_CONFIRMED;
@@ -48,5 +61,15 @@ class Booking extends Model
     public function isPending()
     {
         return $this->status === self::STATUS_PENDING;
+    }
+
+    public function isCancelled()
+    {
+        return $this->status === self::STATUS_CANCELLED;
+    }
+
+    public function isCompleted()
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 }

@@ -8,7 +8,6 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 class User extends Authenticatable
 {
@@ -46,6 +45,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -62,9 +62,9 @@ class User extends Authenticatable
         });
     } */
 
-    public function registrationPayment()
+    public function registrationPayments()
     {
-        return $this->hasOne(RegistrationPayment::class);
+        return $this->hasMany(RegistrationPayment::class);
     }
 
     public function subscriptions()
@@ -77,9 +77,24 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class);
     }
 
+    public function trainerProfile()
+    {
+        return $this->hasOne(Trainer::class);
+    }
+
+    public function serviceBookings()
+    {
+        return $this->hasMany(ServiceBooking::class);
+    }
+
     public function insurancePolicies()
     {
         return $this->hasMany(InsurancePolicy::class);
+    }
+
+    public function entryPackages()
+    {
+        return $this->hasMany(EntryPackage::class);
     }
 
     public function activeInsurancePolicy()
@@ -88,4 +103,54 @@ class User extends Authenticatable
             ->where('status', InsurancePolicy::STATUS_ACTIVE)
             ->where('end_date', '>=', now());
     }
+
+    public function activeSubscription()
+    {
+        return $this->hasOne(Subscription::class)
+            ->where('status', Subscription::STATUS_ACTIVE)
+            ->where('start_date', '<=', now())
+            ->where('end_date', '>=', now());
+    }
+
+    public function activeEntryPackage()
+    {
+        return $this->hasOne(EntryPackage::class)
+            ->where('status', EntryPackage::STATUS_ACTIVE)
+            ->where('end_date', '>=', now());
+    }
+
+    public function hasActiveInsurance()
+    {
+        return $this->activeInsurancePolicy()->exists();
+    }
+
+    public function hasActiveSubscription()
+    {
+        return $this->activeSubscription()->exists();
+    }
+
+    public function isTrainer()
+    {
+        return $this->trainerProfile()->exists();
+    }
+
+    public function hasActiveEntryPackage()
+    {
+        return $this->activeEntryPackage()->exists();
+    }
+
+    public function canBookLesson()
+    {
+        return $this->hasActiveInsurance() && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
+    }
+
+    public function canBookPaidLesson()
+    {
+        return $this->hasActiveInsurance();
+    }
+
+    public function canAccessGym()
+    {
+        return $this->hasActiveInsurance() && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
+    }  
 }

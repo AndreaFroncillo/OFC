@@ -37,4 +37,19 @@ class Lesson extends Model
     {
         return $this->bookings()->count() >= $this->max_participants;
     }
+
+        public function isScheduled()
+    {
+        return $this->status === self::STATUS_SCHEDULED;
+    }
+
+    public function isCancelled()
+    {
+        return $this->status === self::STATUS_CANCELLED;
+    }
+
+    public function isCompleted()
+    {
+        return $this->status === self::STATUS_COMPLETED;
+    }
 }
