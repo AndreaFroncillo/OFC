@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('code')->unique();
+            $table->string('policy_number')->nullable()->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->decimal('price', 8, 2)->default(20.00);
             $table->date('start_date');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             // Admin notes
             $table->text('notes')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

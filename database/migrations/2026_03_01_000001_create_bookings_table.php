@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('lesson_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subscription_id')->nullable()->constrained()->nullOnDelete();
-            $table->decimal('price', 6,2)->default(10.00);
+            $table->decimal('price', 8,2)->default(10.00);
             $table->string('status')->default('pending'); 
+            $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
 
             $table->unique(['user_id', 'lesson_id']);

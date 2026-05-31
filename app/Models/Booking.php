@@ -17,15 +17,14 @@ class Booking extends Model
     ];
 
     protected $casts = [
-        'status' => 'string',
+        'price' => 'decimal:2',
+        'cancelled_at' => 'datetime',
     ];
 
     public const STATUS_PENDING = 'pending';
     public const STATUS_CONFIRMED = 'confirmed';
     public const STATUS_CANCELLED = 'cancelled';
     public const STATUS_COMPLETED = 'completed';
-    public const STATUS_PAID = 'paid';
-    public const STATUS_FAILED = 'failed';
     
 
     public function user()
@@ -41,16 +40,6 @@ class Booking extends Model
     public function subscription()
     {
         return $this->belongsTo(Subscription::class);
-    }
-
-    public function isPaid()
-    {
-        return $this->status === self::STATUS_PAID;
-    }
-
-    public function isFailed()
-    {
-        return $this->status === self::STATUS_FAILED;
     }
 
     public function isConfirmed()
@@ -71,5 +60,46 @@ class Booking extends Model
     public function isCompleted()
     {
         return $this->status === self::STATUS_COMPLETED;
+    }
+
+    public function isFree()
+    {
+        return $this->subscription_id !== null;
+    }
+
+    public function isPaidBooking()
+    {
+        return $this->subscription_id === null;
+    }
+
+    public function requiresInsurance()
+    {
+        return $this->lesson?->requires_insurance;
+    }
+
+    public function scopeConfirmed($query)
+    {
+        return $query->where('status', self::STATUS_CONFIRMED);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', self::STATUS_CANCELLED);
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', self::STATUS_COMPLETED);
+    }
+
+    public function canBeCancelled(): bool
+    {
+        return $this->isPending()
+            || $this->isConfirmed();
     }
 }

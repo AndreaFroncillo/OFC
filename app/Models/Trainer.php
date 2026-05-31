@@ -10,8 +10,14 @@ class Trainer extends Model
 {
     use HasUuid, HasCode;
 
-    protected $guarder = [
-        'id'
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $casts = [
+        'is_available' => 'boolean',
     ];
 
     public function lessons()
@@ -27,5 +33,10 @@ class Trainer extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->is_available;
     }
 }

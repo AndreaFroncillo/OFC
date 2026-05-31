@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('surname')->nullable()->after('name');
             $table->string('phone')->nullable()->after('password');
             $table->string('goal')->nullable()->after('phone');
-            $table->boolean('is_active')->default(false)->after('goal');
+            $table->string('status')->default('registered')->after('goal');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['uuid', 'code', 'surname', 'phone', 'goal', 'is_active']);
+            $table->dropColumn(['uuid', 'code', 'surname', 'phone', 'goal', 'status']);
         });
     }
 };

@@ -16,11 +16,16 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('code')->unique();
             $table->foreignId('trainer_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('category')->nullable();
+            $table->decimal('price', 8, 2)->default(10.00);
+            $table->integer('max_participants');
+            $table->string('status')->default('scheduled');
+            $table->boolean('is_bookable')->default(true);
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->integer('max_participants');
-            $table->string('status')->default('scheduled');
             $table->timestamps();
         });
     }

@@ -19,8 +19,12 @@ return new class extends Migration
 
             // Informazioni servizio
             $table->string('name');
+            $table->string('slug')->unique();
 
             $table->text('description')->nullable();
+
+            // Categoria (es. "personal training", "group class", "nutrition consultation")
+            $table->string('category')->nullable()->index();
 
             // Prezzo servizio
             $table->decimal('price', 8, 2);
@@ -33,6 +37,14 @@ return new class extends Migration
 
             // Attivo/non attivo
             $table->boolean('is_active')->default(true);
+
+            // Visibilità pubblica
+            $table->boolean('is_visible')->default(true);
+
+            // Ordine di visualizzazione
+            $table->integer('sort_order')->default(0);
+
+            // Timestamp
             $table->timestamps();
         });
     }

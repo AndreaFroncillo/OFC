@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasCode;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class ServiceBooking extends Model
 {
@@ -113,5 +114,38 @@ class ServiceBooking extends Model
         return $this->payment_status === self::PAYMENT_REFUNDED;
     }
 
-    
+    public function hasTrainer(): bool
+    {
+        return !is_null($this->trainer_id);
+    }
+
+    public function requiresInsurance(): bool
+    {
+        return $this->service?->requires_insurance ?? false;
+    }
+
+    public function requiresTrainer(): bool
+    {
+        return $this->service?->requires_trainer ?? false;
+    }
+
+    public function scopeConfirmed(Builder $query)
+    {   
+        return $query->where('status', self::STATUS_CONFIRMED);
+    }
+
+    public function scopePending(Builder $query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopePaid(Builder $query)
+    {
+        return $query->where('payment_status', self::PAYMENT_PAID);
+    }
+
+    public function scopeCancelled(Builder $query)
+    {
+        return $query->where('status', self::STATUS_CANCELLED);
+    }
 }

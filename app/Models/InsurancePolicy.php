@@ -20,12 +20,11 @@ class InsurancePolicy extends Model
     public const STATUS_ACTIVE = 'active';
     public const STATUS_EXPIRED = 'expired';
     public const STATUS_CANCELLED = 'cancelled';
-    public const STATUS_PAID = 'paid';
-    public const STATUS_FAILED = 'failed';
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
+        'paid_at' => 'datetime',
         'price' => 'decimal:2',
     ];
 
@@ -34,24 +33,17 @@ class InsurancePolicy extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function isPaid()
-    {
-        return $this->status === self::STATUS_PAID;
-    }
-
-    public function isFailed()
-    {
-        return $this->status === self::STATUS_FAILED;
-    }
-
     public function isActive()
     {
-        return $this->status === self::STATUS_ACTIVE;
+        return $this->status === self::STATUS_ACTIVE
+            && $this->start_date <= now()
+            && $this->end_date >= now();
     }
 
     public function isExpired()
     {
-        return $this->status === self::STATUS_EXPIRED;
+        return $this->status === self::STATUS_EXPIRED
+            || $this->end_date < now();
     }
 
     public function isCancelled()
@@ -62,5 +54,44 @@ class InsurancePolicy extends Model
     public function isPending()
     {
         return $this->status === self::STATUS_PENDING;
+    }
+
+    public function daysRemaining()
+    {
+        if ($this->isExpired()) {
+            return 0;
+        }
+
+        return now()->diffInDays($this->end_date, false);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query
+            ->where('status', self::STATUS_ACTIVE)
+            ->whereDate('end_date', '>=', now());
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query
+            ->where(function ($query) {
+                $query->where('status', self::STATUS_EXPIRED)
+                    ->orWhereDate('end_date', '<', now());
+            });
+    }
+
+    public function activate()
+    {
+        $this->update([
+            'status' => self::STATUS_ACTIVE,
+        ]);
+    }
+
+    public function expire()
+    {
+        $this->update([
+            'status' => self::STATUS_EXPIRED,
+        ]);
     }
 }

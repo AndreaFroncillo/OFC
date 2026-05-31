@@ -45,9 +45,15 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean',
         ];
     }
+
+    public const STATUS_REGISTERED = 'registered';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_SUSPENDED = 'suspended';
+    public const STATUS_EXPIRED = 'expired';
+    public const STATUS_BANNED = 'banned';
+
 
     /* protected static function booted()
     {
@@ -97,6 +103,11 @@ class User extends Authenticatable
         return $this->hasMany(EntryPackage::class);
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function activeInsurancePolicy()
     {
         return $this->hasOne(InsurancePolicy::class)
@@ -115,8 +126,42 @@ class User extends Authenticatable
     public function activeEntryPackage()
     {
         return $this->hasOne(EntryPackage::class)
-            ->where('status', EntryPackage::STATUS_ACTIVE)
+            ->where('is_active', true)
             ->where('end_date', '>=', now());
+    }
+
+    public function isTrainer()
+    {
+        return $this->hasRole('trainer');
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isCustomer()
+    {
+        return $this->hasRole('customer');
+    }
+
+    public function isActive()
+    {
+        return $this->is_active;
+    }
+
+    public function activate()
+    {
+        return $this->update([
+            'is_active' => true,
+        ]);
+    }
+
+    public function deactivate()
+    {
+        return $this->update([
+            'is_active' => false,
+        ]);
     }
 
     public function hasActiveInsurance()
@@ -127,11 +172,6 @@ class User extends Authenticatable
     public function hasActiveSubscription()
     {
         return $this->activeSubscription()->exists();
-    }
-
-    public function isTrainer()
-    {
-        return $this->trainerProfile()->exists();
     }
 
     public function hasActiveEntryPackage()
@@ -152,5 +192,10 @@ class User extends Authenticatable
     public function canAccessGym()
     {
         return $this->hasActiveInsurance() && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
-    }  
+    } 
+
+    public function hasRole(string $slug): bool
+    {
+        return $this->role?->slug === $slug;
+    }
 }

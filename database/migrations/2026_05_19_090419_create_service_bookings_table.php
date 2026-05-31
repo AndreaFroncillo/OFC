@@ -90,6 +90,20 @@ return new class extends Migration
 
             $table->text('notes')->nullable();
             $table->timestamps();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Vincolo di unicità per evitare doppie prenotazioni dello stesso servizio da parte dello stesso utente nello stesso orario
+            |--------------------------------------------------------------------------
+            */
+            $table->unique([
+                'user_id',
+                'service_id',
+                'booking_date',
+                'start_time'
+            ],
+            'sb_usr_srv_date_time_uq'
+            );
         });
     }
 

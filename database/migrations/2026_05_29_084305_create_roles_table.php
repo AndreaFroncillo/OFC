@@ -9,17 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('code')->unique();     
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();       
-            $table->decimal('price', 8, 2);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('code')->unique();
+
+            $table->string('name')->unique();
+            // admin, trainer, user
+
+            $table->string('slug')->unique();
+            // admin, trainer, customer
+            
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('roles');
     }
 };

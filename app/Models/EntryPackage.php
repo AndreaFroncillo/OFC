@@ -22,13 +22,9 @@ class EntryPackage extends Model
     |--------------------------------------------------------------------------
     */
 
-    public const STATUS_ACTIVE = 'active';
-
-    public const STATUS_EXPIRED = 'expired';
-
-    public const STATUS_CONSUMED = 'consumed';
-
-    public const STATUS_CANCELLED = 'cancelled';
+    public const PAYMENT_UNPAID = 'unpaid';
+    public const PAYMENT_PAID = 'paid';
+    public const PAYMENT_REFUNDED = 'refunded';
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +82,9 @@ class EntryPackage extends Model
 
     public function isActive(): bool
     {
-        return $this->is_active && !$this->isExpired(); 
+        return $this->is_active
+            && !$this->isExpired()
+            && !$this->isConsumed();
     }
 
     public function isConsumed(): bool
@@ -96,6 +94,54 @@ class EntryPackage extends Model
 
     public function isCancelled(): bool
     {
-        return !$this->is_active && !$this->isExpired() && !$this->isConsumed();
+        return !$this->is_active;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->payment_status === self::PAYMENT_PAID;
+    }
+
+    public function isUnpaid(): bool
+    {
+        return $this->payment_status === self::PAYMENT_UNPAID;
+    }
+
+    public function isRefunded(): bool
+    {
+        return $this->payment_status === self::PAYMENT_REFUNDED;
+    }
+
+    public function useEntry(): bool
+    {
+        if (!$this->isUsable()) {
+            return false;
+        }
+
+        $this->decrement('remaining_entries');
+
+        return true;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    */
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query
+            ->where('is_active', true)
+            ->where('remaining_entries', '>', 0)
+            ->where(function ($q) {
+                $q->whereNull('end_date')
+                ->orWhere('end_date', '>=', today());
+            });
     }
 }

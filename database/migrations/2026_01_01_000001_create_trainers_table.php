@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('code')->unique();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('email')->unique();
-            $table->string('phone')->nullable();
             $table->string('specialization')->nullable();
+            $table->text('bio')->nullable();
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }

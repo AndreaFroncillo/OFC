@@ -16,21 +16,18 @@ class RegistrationPayment extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'amount' => 'decimal:2',
+    ];
+
     public const STATUS_PENDING = 'pending';
-    public const STATUS_CONFIRMED = 'confirmed';
-    public const STATUS_CANCELLED = 'cancelled';
-    public const STATUS_COMPLETED = 'completed';
     public const STATUS_PAID = 'paid';
     public const STATUS_FAILED = 'failed';
+    public const STATUS_REFUNDED = 'refunded';
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-        public function isConfirmed()
-    {
-        return $this->status === self::STATUS_CONFIRMED;
     }
 
     public function isPaid()
@@ -48,13 +45,18 @@ class RegistrationPayment extends Model
         return $this->status === self::STATUS_PENDING;
     }
 
-    public function isCancelled()
+    public function isRefunded()
     {
-        return $this->status === self::STATUS_CANCELLED;
+        return $this->status === self::STATUS_REFUNDED;
     }
 
-    public function isCompleted()
+    public function markAsPaid()
     {
-        return $this->status === self::STATUS_COMPLETED;
+        $this->update([
+            'status' => self::STATUS_PAID,
+            'paid_at' => now(),
+        ]);
+
+        $this->user->activate();
     }
 }

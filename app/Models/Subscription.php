@@ -16,13 +16,17 @@ class Subscription extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'price' => 'decimal:2',
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'auto_renew' => 'boolean',
+    ];
+
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACTIVE = 'active';
-    public const STATUS_CONFIRMED = 'confirmed';
     public const STATUS_CANCELLED = 'cancelled';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_PAID = 'paid';
-    public const STATUS_FAILED = 'failed';
+    public const STATUS_EXPIRED = 'expired';
 
     public function user()
     {
@@ -34,34 +38,22 @@ class Subscription extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function plan()
+    public function subscriptionPlan()
     {
-        return $this->hasOne(SubscriptionPlan::class);
+        return $this->belongsTo(SubscriptionPlan::class);
     }
 
     public function isActive()
     {
-        return $this->start_date <= now() && $this->end_date >= now();
-    }
-
-    public function isPaid()
-    {
-        return $this->status === self::STATUS_PAID;
-    }
-
-    public function isFailed()
-    {
-        return $this->status === self::STATUS_FAILED;
+        return $this->status === self::STATUS_ACTIVE
+            && $this->start_date <= now()
+            && $this->end_date >= now();
     }
 
     public function isExpired()
     {
-        return $this->end_date < now();
-    }
-
-        public function isConfirmed()
-    {
-        return $this->status === self::STATUS_CONFIRMED;
+        return $this->status === self::STATUS_EXPIRED
+            || $this->end_date < now();
     }
 
     public function isPending()
@@ -74,8 +66,28 @@ class Subscription extends Model
         return $this->status === self::STATUS_CANCELLED;
     }
 
-    public function isCompleted()
+    public function daysRemaining()
     {
-        return $this->status === self::STATUS_COMPLETED;
+        if ($this->isExpired()) {
+            return 0;
+        }
+
+        return now()->diffInDays($this->end_date, false);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query
+            ->where('status', self::STATUS_ACTIVE)
+            ->whereDate('end_date', '>=', now());
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query
+            ->where(function ($query) {
+                $query->where('status', self::STATUS_EXPIRED)
+                    ->orWhereDate('end_date', '<', now());
+            });
     }
 }
