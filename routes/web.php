@@ -11,4 +11,4 @@ Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
 Route::post('/language/{lang}', [PublicController::class, 'setLanguage'])->name('setLocale');
 
 //-------dashboard---------
-Route::get('dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
