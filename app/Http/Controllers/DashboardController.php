@@ -10,10 +10,18 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user->isTrainer()) {
-            return redirect()->route('trainers.show', $user->trainer->id);
-        } else {
-            return view('dashboard');
+
+        // 1. Controllo Amministratore
+        if ($user->isAdmin()) {
+            return view('dashboard.admin');
         }
+
+        // 2. Controllo Trainer
+        if ($user->isTrainer()) {
+            return view('dashboard.trainer');
+        }
+
+        // 3. Default: Cliente/Customer
+        return view('dashboard.customer');
     }
 }
