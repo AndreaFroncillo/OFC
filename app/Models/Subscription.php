@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'SUB';
     
     protected $guarded = [
         'id',
@@ -89,5 +92,15 @@ class Subscription extends Model
                 $query->where('status', self::STATUS_EXPIRED)
                     ->orWhereDate('end_date', '<', now());
             });
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', self::STATUS_CANCELLED);
     }
 }

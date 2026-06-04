@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionPlan extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'PLN';
     
     protected $guarded = [
         'id',
@@ -31,9 +34,9 @@ class SubscriptionPlan extends Model
     ];
 
     // Tipi di piano
-    public const CATEGORY_BASIC = 'basic';
-    public const CATEGORY_OPEN = 'open';
-    public const CATEGORY_EXTRA = 'extra';
+    public const CATEGORY_BASIC = 'BASIC';
+    public const CATEGORY_OPEN = 'OPEN';
+    public const CATEGORY_EXTRA = 'EXTRA';
 
     // Relazioni
     public function subscriptions()
@@ -42,12 +45,12 @@ class SubscriptionPlan extends Model
     }
 
     // Helpers per stato
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->is_active;
     }
 
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->is_visible;
     }
@@ -69,22 +72,22 @@ class SubscriptionPlan extends Model
     }
 
     // Helpers per accesso e servizi
-    public function hasLimitedAccess()
+    public function hasLimitedAccess(): bool
     {
         return !$this->unlimited_access;
     }
 
-    public function hasUnlimitedAccess()
+    public function hasUnlimitedAccess(): bool
     {
         return $this->unlimited_access;
     }
 
-    public function requiresInsurance()
+    public function requiresInsurance(): bool
     {
         return $this->requires_insurance;
     }
 
-    public function allowsGroupLessons()
+    public function allowsGroupLessons(): bool
     {
         return $this->includes_group_lessons;
     }
@@ -96,5 +99,10 @@ class SubscriptionPlan extends Model
         ->where('is_visible', true)
         ->where('is_active', true)
         ->orderBy('sort_order');
+    }
+
+    public function getLabelAttribute(): string
+    {
+        return __('subscription-plans.' . $this->slug);
     }
 }

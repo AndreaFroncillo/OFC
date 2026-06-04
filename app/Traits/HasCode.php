@@ -15,10 +15,13 @@ trait HasCode
 
     protected static function generateUniqueCode()
     {
-        $last = self::latest('id')->first();
-        $number = $last ? $last->id + 1 : 1;
+        $prefix = defined('static::CODE_PREFIX')
+            ? static::CODE_PREFIX
+            : 'GEN';
 
-        return 'GYM-' . str_pad($number, 6, '0', STR_PAD_LEFT);
+            $lastId = static::max('id') ?? 0;
+
+            return $prefix . '-' . str_pad($lastId + 1, 6, '0', STR_PAD_LEFT);
     }
 
 }

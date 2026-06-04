@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class ServiceBooking extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'SBK';
 
     protected $guarded = [
         'id',
@@ -147,5 +150,13 @@ class ServiceBooking extends Model
     public function scopeCancelled(Builder $query)
     {
         return $query->where('status', self::STATUS_CANCELLED);
+    }
+
+    public function scopeCompleted(Builder $query)
+    {
+        return $query->where(
+            'status',
+            self::STATUS_COMPLETED
+        );
     }
 }

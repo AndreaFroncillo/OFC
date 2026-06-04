@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class InsurancePolicy extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'INP';
 
     protected $guarded = [
         'id',
@@ -70,6 +73,22 @@ class InsurancePolicy extends Model
         return $query
             ->where('status', self::STATUS_ACTIVE)
             ->whereDate('end_date', '>=', now());
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where(
+            'status',
+            self::STATUS_PENDING
+        );
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where(
+            'status',
+            self::STATUS_CANCELLED
+        );
     }
 
     public function scopeExpired($query)

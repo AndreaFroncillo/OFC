@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('trainers', function (Blueprint $table) {
             $table->foreignId('user_id')
+            ->after('code')
             ->nullable()
             ->unique()
             ->constrained()

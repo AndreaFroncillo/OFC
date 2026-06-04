@@ -3,21 +3,27 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'LSN';
 
     protected $guarded = [
-        'id'
+        'id',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
         'date' => 'date',
         'requires_insurance' => 'boolean',
         'is_bookable' => 'boolean',
+        'max_participants' => 'integer',
     ];
 
     public const STATUS_SCHEDULED = 'scheduled';
@@ -75,9 +81,14 @@ class Lesson extends Model
         return $this->isScheduled()
             && !$this->isFull();
     }
-    
+
     public function hasAvailableSpots()
     {
         return !$this->isFull();
+    }
+
+    public function isPast(): bool
+    {
+        return $this->date->isPast();
     }
 }

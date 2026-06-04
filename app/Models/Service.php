@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'SRV';
 
     protected $guarded = [
         'id',
@@ -37,16 +40,20 @@ class Service extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Caonsts Categories
+    | Constants Categories
     |--------------------------------------------------------------------------
     */
 
-    public const CATEGORY_PERSONAL_TRAINING = 'personal_training';
+    public const CATEGORY_EXTRA = 'EXTRA';
+
+    public const CATEGORY_PERSONAL_TRAINING = 'personal-training';
     public const CATEGORY_NUTRITION = 'nutrition';
-    public const CATEGORY_MASSAGE = 'massage';
-    public const CATEGORY_POSTURAL = 'postural';
-    public const CATEGORY_THERAPY = 'therapy';
-    public const CATEGORY_ASSESSMENT = 'assessment';
+    public const CATEGORY_REHABILITATION = 'instrumental-rehabilitative-therapies';
+    public const CATEGORY_MASSAGE = 'massages';
+    public const CATEGORY_PREPARATION_COMPETITION = 'physical-preparation-for-competitions';
+    public const CATEGORY_BODY_COMPOSITION_ANALYSIS = 'body-composition-analysis';
+    public const CATEGORY_POSTURAL = 'postural-and-corrective-gymnastics';
+    public const CATEGORY_THERAPY = 'massotherapy';
 
     /*
     |--------------------------------------------------------------------------
@@ -85,5 +92,16 @@ class Service extends Model
             ->where('is_active', true)
             ->where('is_visible', true)
             ->orderBy('sort_order');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Attributes
+    |--------------------------------------------------------------------------
+    */
+
+    public function getLabelAttribute(): string
+    {
+        return __('services.' . $this->slug);
     }
 }

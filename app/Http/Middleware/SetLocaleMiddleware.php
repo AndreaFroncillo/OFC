@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -16,8 +17,9 @@ class SetLocaleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $localeLanguage = session('locale', 'it');
-        App::setLocale($localeLanguage);
+        $locale = session('locale', 'it');
+        App::setLocale($locale);
+        Carbon::setLocale($locale);
         return $next($request);
     }
 }

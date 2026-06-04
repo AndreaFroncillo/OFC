@@ -14,6 +14,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasUuid, HasCode;
 
+    public const CODE_PREFIX = 'GYM';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -54,8 +56,8 @@ class User extends Authenticatable
     public const STATUS_EXPIRED = 'expired';
     public const STATUS_BANNED = 'banned';
 
-
-    /* protected static function booted()
+    /*
+    protected static function booted()
     {
         static::creating(function ($user) {
             if (!$user->uuid) {
@@ -66,7 +68,8 @@ class User extends Authenticatable
                 $user->code = self::generateUniqueCode();
             }
         });
-    } */
+    }
+    */
 
     public function registrationPayments()
     {
@@ -83,7 +86,7 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class);
     }
 
-    public function trainerProfile()
+    public function trainer()
     {
         return $this->hasOne(Trainer::class);
     }
@@ -127,7 +130,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(EntryPackage::class)
             ->where('is_active', true)
-            ->where('end_date', '>=', now());
+            ->where(function ($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', now());
+            });
     }
 
     public function isTrainer()
@@ -181,7 +187,8 @@ class User extends Authenticatable
 
     public function canBookLesson()
     {
-        return $this->hasActiveInsurance() && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
+        return $this->hasActiveInsurance()
+            && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
     }
 
     public function canBookPaidLesson()
@@ -191,8 +198,9 @@ class User extends Authenticatable
 
     public function canAccessGym()
     {
-        return $this->hasActiveInsurance() && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
-    } 
+        return $this->hasActiveInsurance()
+            && ($this->hasActiveSubscription() || $this->hasActiveEntryPackage());
+    }
 
     public function hasRole(string $slug): bool
     {

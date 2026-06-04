@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasCode;
+use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasUuid, HasCode;
+    use HasUuid, HasCode, HasLocalizedDates;
+
+    public const CODE_PREFIX = 'ROL';
 
     protected $guarded = [
         'id',
@@ -19,5 +22,10 @@ class Role extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function getLabelAttribute(): string
+    {
+        return __('roles.' . $this->slug);
     }
 }
