@@ -7,6 +7,9 @@ use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperInsurancePolicy
+ */
 class InsurancePolicy extends Model
 {
     use HasUuid, HasCode, HasLocalizedDates;

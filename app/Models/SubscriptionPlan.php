@@ -7,6 +7,9 @@ use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperSubscriptionPlan
+ */
 class SubscriptionPlan extends Model
 {
     use HasUuid, HasCode, HasLocalizedDates;

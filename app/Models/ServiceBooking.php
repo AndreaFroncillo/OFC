@@ -8,6 +8,9 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperServiceBooking
+ */
 class ServiceBooking extends Model
 {
     use HasUuid, HasCode, HasLocalizedDates;
