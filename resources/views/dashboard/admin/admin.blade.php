@@ -1,4 +1,4 @@
-<x-layout  :fullHeight="false" :fullHeight="true" title="{{__('dashboards.customer')}}">
+<x-layout :fullHeight="true" :hideSubscription="true" title="{{__('dashboards.admin')}}">
     <header>
         <div class="container-fluid vh-100 img-custom">
             <div class="row h-75 justify-content-center align-items-center">

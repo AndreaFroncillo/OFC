@@ -3,6 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Booking\Booking;
+use App\Models\Booking\ServiceBooking;
+use App\Models\EntryPackage\EntryPackage;
+use App\Models\Insurance\InsurancePolicy;
+use App\Models\Subscription\Subscription;
+use App\Models\Trainer\Trainer;
 use App\Traits\HasCode;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -156,20 +162,13 @@ class User extends Authenticatable
 
     public function isActive()
     {
-        return $this->is_active;
+        return $this->status === self::STATUS_ACTIVE;
     }
 
     public function activate()
     {
         return $this->update([
-            'is_active' => true,
-        ]);
-    }
-
-    public function deactivate()
-    {
-        return $this->update([
-            'is_active' => false,
+            'status' => self::STATUS_ACTIVE,
         ]);
     }
 

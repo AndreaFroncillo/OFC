@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\SubscriptionPlan;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Subscription\SubscriptionPlan;
 use Illuminate\Database\Seeder;
 
 class SubscriptionPlanSeeder extends Seeder

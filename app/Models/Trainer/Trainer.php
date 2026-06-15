@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Trainer;
 
+use App\Models\Booking\ServiceBooking;
+use App\Models\Lesson\Lesson;
+use App\Models\User;
 use App\Traits\HasCode;
 use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;

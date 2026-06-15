@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Service;
 
+use App\Models\Booking\ServiceBooking;
 use App\Traits\HasCode;
 use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;

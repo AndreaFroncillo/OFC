@@ -13,11 +13,5 @@ trait HasUuid
                 $model->uuid = (string) Str::uuid();
             }
         });
-
-        static::saving(function ($model) {
-            if (!$model->uuid) {
-                $model->uuid = (string) Str::uuid();
-            }
-        });
     }
 }

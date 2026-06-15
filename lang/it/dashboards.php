@@ -2,6 +2,7 @@
 
 return [
     'admin' => 'Admin Dashboard',
-    'customer' => 'Dashboard',
+    'customer' => 'Dashboard Cliente',
+    'dashboard' => 'Dashboard',
     'trainer' => 'Trainer Dashboard',
 ];

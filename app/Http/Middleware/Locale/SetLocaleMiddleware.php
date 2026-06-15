@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Locale;
 
 use Carbon\Carbon;
 use Closure;

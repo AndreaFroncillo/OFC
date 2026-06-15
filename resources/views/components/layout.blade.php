@@ -21,7 +21,15 @@
 <body>
     @props(['hideSubscription' => false, 'fullHeight' => false])
 
-    <x-navbar />
+    @if(auth()->user()?->isAdmin())
+        <x-admin::admin-navbar />
+    @elseif(auth()->user()?->isTrainer())
+        <x-trainer::trainer-navbar />
+    @elseif(auth()->user()?->isCustomer())
+        <x-customer::customer-navbar />
+    @else
+        <x-navbar />
+    @endif
 
     <div class="{{ $fullHeight ? 'min-vh-100' : '' }}">
         <main>
@@ -30,16 +38,16 @@
     </div>
 
     @if(!$hideSubscription)
-    <section class="section section-gradient">
-        <div class="container">      
-            <div class="row d-flex align-items-stretch justify-content-center">
-                @auth
-                <x-submission-form />
-                @endauth
-                <x-journey-form />
+        <section class="section section-gradient">
+            <div class="container">      
+                <div class="row d-flex align-items-stretch justify-content-center">
+                    @auth
+                        <x-submission-form />
+                    @endauth
+                    <x-journey-form />
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <x-footer />

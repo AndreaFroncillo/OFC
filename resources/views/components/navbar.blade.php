@@ -12,7 +12,19 @@
                     <a class="nav-link text-w" aria-current="page" href="{{route('homepage')}}">{{__('general.home')}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-w" href="#">{{trans_choice('general.link', 1)}}</a>
+                    <a class="nav-link text-w" href="#">{{trans_choice('subscription-plans.subscription', 2)}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-w" href="#">{{trans_choice('general.lesson', 2)}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-w" href="#">{{trans_choice('general.trainer', 2)}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-w" href="#">{{__('general.about_us')}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-w" href="#">{{trans_choice('general.faq', 2)}}</a>
                 </li>
                 @guest
                 <li class="nav-item dropdown">
@@ -28,7 +40,7 @@
                 @auth
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ciao {{Auth::user()->name}}
+                        {{__('auth.hello')}} {{Auth::user()->name}}
                     </a>
                     <ul class="dropdown-menu">
                         <li>

@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Subscription;
 
+use App\Models\Booking\Booking;
+use App\Models\Subscription\SubscriptionPlan;
+use App\Models\User;
 use App\Traits\HasCode;
 use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
