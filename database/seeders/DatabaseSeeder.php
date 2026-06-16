@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ServiceSeeder::class,
             AdminSeeder::class,
             TrainerSeeder::class,
-            LessonSeeder::class,
+            LessonTemplateSeeder::class,
         ]);
         // User::factory(10)->create();
 

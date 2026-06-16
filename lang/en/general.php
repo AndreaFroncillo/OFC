@@ -40,6 +40,7 @@ return [
     'nutrition' => 'Nutrition',
     'opening_hours' => 'Open from Monday to Saturday',
     'our_courses' => 'Our courses',
+    'overview_text' => 'General overview of users, classes, bookings, and gym activities.',
     'payment' => 'Payment|Payments',
     'personal_training' => 'Personal Training',
     'physiotherapy'  => 'Physiotherapy',

@@ -12,6 +12,38 @@ class LessonSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy Lesson Seeder
+    |--------------------------------------------------------------------------
+    |
+    | This seeder creates individual lessons with a specific date.
+    | It has been temporarily retained as a historical reference, but it is no longer
+    | invoked by the DatabaseSeeder because lesson generation is now handled through
+    | LessonTemplateSeeder + the gym:generate-lessons command.
+    |
+    | Current workflow:
+    | LessonTemplateSeeder creates the recurring rules.
+    | GenerateRecurringLessons generates the actual lessons in the calendar.
+    |
+    */
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy Lesson Seeder
+    |--------------------------------------------------------------------------
+    |
+    | Questo seeder crea lezioni singole con una data specifica.
+    | È stato mantenuto temporaneamente come riferimento storico, ma non viene più
+    | richiamato dal DatabaseSeeder perché la generazione delle lezioni avviene ora
+    | tramite LessonTemplateSeeder + comando gym:generate-lessons.
+    |
+    | Flusso attuale:
+    | LessonTemplateSeeder crea le regole ricorrenti.
+    | GenerateRecurringLessons genera le lezioni reali in calendario.
+    |
+    */
+
+
     public function run(): void
     {
         $trainers = Trainer::all();

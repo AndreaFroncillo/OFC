@@ -20,7 +20,7 @@ return [
     'entry_package' => 'Entry Package',
     'failed' => 'These credentials do not match our records.',
     'forgot_password' => 'Forgot your password?',
-    'go_home' => 'Homepage Site',
+    'go_home' => 'Go To Site',
     'hello' => 'Hello',
     'insurance' => 'Insurance|Insurances',
     'login'       => 'Login',
@@ -39,5 +39,6 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'your_prenotations' => 'Your prenotations',
     'user' => 'User|Users',
+    'welcome_back' => 'Welcome Back'
     
 ];

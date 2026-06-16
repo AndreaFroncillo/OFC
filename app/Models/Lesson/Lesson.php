@@ -3,11 +3,13 @@
 namespace App\Models\Lesson;
 
 use App\Models\Booking\Booking;
+use App\Models\Lesson\LessonTemplate;
 use App\Models\Trainer\Trainer;
 use App\Traits\HasCode;
 use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @mixin IdeHelperLesson
@@ -45,13 +47,18 @@ class Lesson extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function lessonTemplate(): BelongsTo
+    {
+        return $this->belongsTo(LessonTemplate::class);
+    }
+
     public function scopeUpcoming($query)
     {
         return $query->where(function ($query) {
             $query->whereDate('date', '>', today())
                 ->orWhere(function ($query) {
-                        $query->whereDate('date', today())
-                            ->whereTime('start_time', '>', now()->format('H:i:s'));
+                    $query->whereDate('date', today())
+                        ->whereTime('start_time', '>', now()->format('H:i:s'));
                 });
         });
     }
@@ -66,7 +73,7 @@ class Lesson extends Model
         return $this->bookings()->count() >= $this->max_participants;
     }
 
-        public function isScheduled()
+    public function isScheduled()
     {
         return $this->status === self::STATUS_SCHEDULED;
     }

@@ -39,5 +39,6 @@ return [
     'throttle' => 'Troppi tentativi di accesso. Riprova tra :seconds secondi.',
     'your_prenotations' => 'Le tue prenotazioni',
     'user' => 'Utente|Utenti',
+    'welcome_back' => 'Bentornato'
     
 ];

@@ -11,9 +11,11 @@
                 <li class="nav-item">
                     <a class="nav-link text-w" aria-current="page" href="{{route('homepage')}}">{{__('general.home')}}</a>
                 </li>
+                @if(auth()->user()?->isAdmin() || auth()->user()?->isTrainer() || auth()->user()?->isActive())
                 <li class="nav-item">
                     <a class="nav-link text-w" aria-current="page" href="{{route('dashboard')}}">{{__('dashboards.dashboard')}}</a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link text-w" href="#">{{trans_choice('subscription-plans.subscription', 2)}}</a>
                 </li>

@@ -4,16 +4,16 @@
             <div>
                 <p class="dashboard-kicker">{{ __('dashboards.admin') }}</p>
                 <h1 class="dashboard-title">
-                    Ciao {{ auth()->user()->name }}, bentornato
+                    {{ __('auth.hello') }} {{ auth()->user()->name }}, {{__('auth.welcome_back')}}
                 </h1>
                 <p class="dashboard-subtitle">
-                    Panoramica generale di utenti, lezioni, prenotazioni e attività della palestra.
+                    {{__('general.overview_text')}}
                 </p>
             </div>
 
             <div class="dashboard-header-actions">
                 <a href="{{ route('homepage') }}" class="btn btn-outline-custom">
-                    Vai al sito
+                    {{ __('auth.go_home') }}
                 </a>
             </div>
         </div>

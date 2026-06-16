@@ -40,6 +40,7 @@ return [
     'nutrition' => 'Nutrizione',
     'opening_hours' => 'Aperti dal Lunedì al Sabato',
     'our_courses' => 'I nostri corsi',
+    'overview_text' => 'Panoramica generale di utenti, lezioni, prenotazioni e attività della palestra.',
     'payment' => 'Pagamento|Pagamenti',
     'personal_training' => 'Personal Training',
     'physiotherapy'  => 'Fisioterapia',

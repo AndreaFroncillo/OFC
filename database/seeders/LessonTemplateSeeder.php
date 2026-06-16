@@ -1,0 +1,267 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Lesson\LessonTemplate;
+use App\Models\Trainer\Trainer;
+use Illuminate\Database\Seeder;
+
+class LessonTemplateSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $trainers = Trainer::all();
+
+        if ($trainers->isEmpty()) {
+            return;
+        }
+
+        $templates = [
+            // Lunedì
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_MONDAY,
+                'start_time' => '09:30:00',
+                'end_time' => '10:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 1,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Ginnastica Dolce',
+                'description' => 'Lezione di ginnastica dolce per migliorare la mobilità e la flessibilità attraverso esercizi a basso impatto',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_MONDAY,
+                'start_time' => '10:30:00',
+                'end_time' => '11:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 2,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_MONDAY,
+                'start_time' => '18:30:00',
+                'end_time' => '19:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 3,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Pilates',
+                'description' => 'Lezione di Pilates per migliorare la forza del core, la flessibilità e la postura attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_MONDAY,
+                'start_time' => '19:30:00',
+                'end_time' => '20:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 4,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_MONDAY,
+                'start_time' => '20:30:00',
+                'end_time' => '21:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 5,
+            ],
+
+            // Mercoledì
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_WEDNESDAY,
+                'start_time' => '09:30:00',
+                'end_time' => '10:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 6,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Ginnastica Dolce',
+                'description' => 'Lezione di ginnastica dolce per migliorare la mobilità e la flessibilità attraverso esercizi a basso impatto',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_WEDNESDAY,
+                'start_time' => '10:30:00',
+                'end_time' => '11:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 7,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_WEDNESDAY,
+                'start_time' => '18:30:00',
+                'end_time' => '19:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 8,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Pilates',
+                'description' => 'Lezione di Pilates per migliorare la forza del core, la flessibilità e la postura attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_WEDNESDAY,
+                'start_time' => '19:30:00',
+                'end_time' => '20:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 9,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_WEDNESDAY,
+                'start_time' => '20:30:00',
+                'end_time' => '21:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 10,
+            ],
+
+            // Venerdì
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_FRIDAY,
+                'start_time' => '09:30:00',
+                'end_time' => '10:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 11,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Ginnastica Dolce',
+                'description' => 'Lezione di ginnastica dolce per migliorare la mobilità e la flessibilità attraverso esercizi a basso impatto',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_FRIDAY,
+                'start_time' => '10:30:00',
+                'end_time' => '11:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 12,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_FRIDAY,
+                'start_time' => '18:30:00',
+                'end_time' => '19:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 13,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'Pilates',
+                'description' => 'Lezione di Pilates per migliorare la forza del core, la flessibilità e la postura attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_FRIDAY,
+                'start_time' => '19:30:00',
+                'end_time' => '20:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 14,
+            ],
+            [
+                'trainer_id' => $trainers[0]->id,
+                'title' => 'High Total Body',
+                'description' => 'Lezione di allenamento ad alta intensità per migliorare la forza e la resistenza attraverso esercizi a corpo libero e con attrezzi',
+                'category' => 'Fitness',
+                'price' => 15.00,
+                'max_participants' => 20,
+                'weekday' => LessonTemplate::WEEKDAY_FRIDAY,
+                'start_time' => '20:30:00',
+                'end_time' => '21:30:00',
+                'requires_insurance' => true,
+                'is_bookable' => true,
+                'is_active' => true,
+                'sort_order' => 15,
+            ],
+        ];
+
+        foreach ($templates as $template) {
+            LessonTemplate::updateOrCreate(
+                [
+                    'trainer_id' => $template['trainer_id'],
+                    'title' => $template['title'],
+                    'weekday' => $template['weekday'],
+                    'start_time' => $template['start_time'],
+                ],
+                $template
+            );
+        }
+    }
+}
