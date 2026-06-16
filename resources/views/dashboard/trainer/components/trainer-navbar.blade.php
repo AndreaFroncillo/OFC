@@ -1,67 +1,105 @@
-<nav class="navbar navbar-expand-lg bg-black text-w fixed-top nav-custom">
-    <div class="container-fluid">
-        <a class="navbar-brand text-w" href="{{route('homepage')}}">
-            <img src="{{ asset('storage/img/LogoNoBg1.png') }}" alt="Logo Olimpia Club House" width="150px" class="img-fluid">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<aside class="dashboard-sidebar bg-black text-w" id="dashboardSidebar">
+    <div class="dashboard-sidebar-header">
+        <button class="dashboard-sidebar-toggle" type="button" id="dashboardSidebarToggle" aria-label="Toggle sidebar">
+            <i class="fas fa-chevron-right sidebar-icon-closed"></i>
+            <i class="fas fa-chevron-left sidebar-icon-open"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-w" aria-current="page" href="{{route('dashboard')}}">{{__('dashboards.dashboard')}}</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{__('auth.my_lessons')}}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">{{trans_choice('general.list', 1)}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{trans_choice('general.calendary', 1)}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{__('general.next_lessons')}}</a></li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="#">{{__('general.class_history')}}</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{trans_choice('general.booking', 2)}}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">{{__('general.booking_lessons')}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{__('general.booking_services')}}</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{trans_choice('general.customer', 2)}}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">{{__('general.roster')}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{__('general.gym_cards')}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{trans_choice('general.goal', 2)}}</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{trans_choice('general.service', 2)}}
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">{{__('general.personal_training')}}</a></li>
-                        <li><a class="dropdown-item" href="#">{{trans_choice('general.appointment', 2)}}</a></li>
-                    </ul>
-                </li>
-                <x-partials.listitem_profile />
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-w" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{__('general.lang')}}
-                    </a>
-                    <ul class="dropdown-menu p-0 border-0 shadow-none ul-flag">
-                        <li><x-_locale lang="it" /></li>
-                        <li><x-_locale lang="en" /></li>
-                    </ul>
-                </li>
-            </ul>
+
+        <a class="dashboard-sidebar-logo" href="{{ route('homepage') }}">
+            <img src="{{ asset('storage/img/LogoNoBg1.png') }}" alt="Logo Olimpia Club House" class="img-fluid">
+        </a>
+    </div>
+
+    <nav class="dashboard-sidebar-nav">
+        <a class="dashboard-sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+            <i class="fas fa-gauge-high"></i>
+            <span>{{ __('dashboards.dashboard') }}</span>
+        </a>
+
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-calendar-days"></i>
+                <span>{{ trans_choice('general.calendary', 1) }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="#">{{ __('general.daily_agenda')}}</a>
+                <a href="#">{{ __('general.weekly_agenda')}}</a>
+                <a href="#">{{ __('general.availability')}}</a>
+            </div>
+        </div>
+
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-dumbbell"></i>
+                <span>{{ __('auth.my_lessons') }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="#">{{ trans_choice('general.list', 1) }}</a>
+                <a href="#">{{ trans_choice('general.calendary', 1) }}</a>
+                <a href="#">{{ __('general.next_lessons') }}</a>
+                <a href="#">{{ __('general.class_history') }}</a>
+            </div>
+        </div>
+
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-calendar-check"></i>
+                <span>{{ trans_choice('general.booking', 2) }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="#">{{ __('general.booking_lessons') }}</a>
+                <a href="#">{{ __('general.booking_services') }}</a>
+            </div>
+        </div>
+
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-users"></i>
+                <span>{{ trans_choice('general.customer', 2) }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="#">{{ __('general.roster') }}</a>
+                <a href="#">{{ __('general.gym_cards') }}</a>
+                <a href="#">{{ trans_choice('general.goal', 2) }}</a>
+            </div>
+        </div>
+
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-spa"></i>
+                <span>{{ trans_choice('general.service', 2) }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="#">{{ __('general.personal_training') }}</a>
+                <a href="#">{{ trans_choice('general.appointment', 2) }}</a>
+            </div>
+        </div>
+
+        <x-partials.flags_dropdown />
+    </nav>
+
+    <div class="dashboard-sidebar-footer">
+        <div class="dashboard-sidebar-group">
+            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
+                <i class="fas fa-user-circle"></i>
+                <span>{{ __('auth.hello') }} {{ Auth::user()->name }}</span>
+                <i class="fas fa-chevron-down dropdown-chevron"></i>
+            </button>
+            <div class="dashboard-sidebar-submenu">
+                <a href="{{ route('homepage') }}">{{ __('auth.go_home') }}</a>
+                <a href="#">{{ __('auth.profile') }}</a>
+                <a href="#" onclick="event.preventDefault(); document.querySelector('#dashboard-form-logout').submit();">
+                    {{ __('auth.logout') }}
+                </a>
+                <form action="{{ route('logout') }}" method="POST" class="d-none" id="dashboard-form-logout">
+                    @csrf
+                </form>
+            </div>
         </div>
     </div>
-</nav>
+</aside>

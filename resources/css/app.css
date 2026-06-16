@@ -1,4 +1,44 @@
+/* =======================================================
+   LIBRERIE ESTERNE
+======================================================= */
+
 @import 'mdb-ui-kit/css/mdb.min.css';
 /* @import 'bootstrap'; */
 @import "intl-tel-input/build/css/intlTelInput.css";
-@import './style.css';
+
+
+/* =======================================================
+   ROLLBACK IMMEDIATO
+   Se qualcosa si rompe:
+   1) commenta tutti gli import sotto
+   2) decommenta la riga successiva
+======================================================= */
+
+/* @import './style.css'; */
+
+
+/* =======================================================
+   NUOVA STRUTTURA CSS
+======================================================= */
+
+/* Variabili globali */
+@import './variables.css';
+
+/* Utility classes */
+@import './utilities.css';
+
+/* Navbar pubblica + flags */
+@import './navbar.css';
+
+/* Homepage, Hero, Sections, Cards */
+@import './public.css';
+
+/* Form, Login, Register, Intl Tel Input */
+@import './forms.css';
+
+/* Footer */
+@import './footer.css';
+
+/* Dashboard */
+@import './dashboard-sidebar.css';
+@import './dashboard-widgets.css';

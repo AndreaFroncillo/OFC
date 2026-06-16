@@ -1,0 +1,16 @@
+/* Variables */
+:root {
+    --v: rgb(92, 12, 147);
+    --bl: rgb(11, 77, 176);
+    --i: rgb(169, 133, 244);
+    --vf: rgb(196, 108, 226);
+    --yn: rgb(226, 247, 8);
+    --b: rgb(0, 0, 0);
+    --w: rgb(247, 247, 247);
+    --p: rgb(197, 9, 145);
+    --primary-color: #ff006e;
+    --secondary-color: #8338ec;
+    --accent-color: #ffbe0b;
+    --dark-color: #1a1a1a;
+    --light-color: #f8f9fa;
+}

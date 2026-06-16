@@ -1,6 +1,6 @@
-<x-layout :fullHeight="true" :hideSubscription="true" title="{{__('dashboards.admin')}}">
+<x-layout :dashboard="true" :fullHeight="true" :hideSubscription="true" title="{{__('dashboards.admin')}}">
     <header>
-        <div class="container-fluid vh-100 img-custom">
+        <div class="container-fluid px-0 vh-100 img-custom">
             <div class="row h-75 justify-content-center align-items-center">
                 <div class="col-12 d-flex flex-column align-items-center">
                     <h1 class="text-center display-1 text-yn shadow title">

@@ -5,6 +5,7 @@ return [
     'all_lessons' => 'Tutte le lezioni',
     'all_services' => 'Tutti i servizi',
     'appointment' => 'Appuntamento|Appuntamenti',
+    'availability' => 'Disponibilità',
     'bia' => 'Analisi Composizione Corporea (BIA)',
     'body' => 'Corpo',
     'body_analysis' => 'Corpo (Nutrizione e BIA)',
@@ -20,6 +21,7 @@ return [
     'content_web_site' => 'Traduzioni e contenuto',
     'course' => 'Corso|Corsi',
     'customer' => 'Cliente|Clienti',
+    'daily_agenda' => 'Agenda giornaliera',
     'description' => 'Raggiungi i tuoi obiettivi con i nostri programmi personalizzati e la guida dei migliori trainer professionali',
     'enrollment' => 'Iscrizione|Iscrizioni',
     'faq' => 'FAQ|FAQs',
@@ -55,5 +57,6 @@ return [
     'therapies' => 'Terapie Strumentali Riabilitative',
     'trainer' => 'Trainer|Trainer', 
     'training' => 'Allenamento',
+    'weekly_agenda' => 'Agenda settimanale',
     'workout' => 'Piano Allenamento',
 ];

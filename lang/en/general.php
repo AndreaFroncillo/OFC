@@ -5,6 +5,7 @@ return [
     'all_lessons' => 'All Lessons',
     'all_services' => 'All Services',
     'appointment' => 'Appointment|Appointments',
+    'availability' => 'Availability',
     'bia' => 'Body Composition Analysis (BIA)',
     'body' => 'Body',
     'body_analysis' => 'Body (Nutrition and BIA)',
@@ -20,6 +21,7 @@ return [
     'content_web_site' => 'Website content & Translations',
     'course' => 'Course|Courses',
     'customer' => 'Customer|Customers',
+    'daily_agenda' => 'Daily agenda',
     'description' => 'Reach your goals with our personalized programs and the guidance of the best professional trainers',
     'enrollment' => 'Enrollment|Enrollments',
     'faq' => 'FAQ|FAQs',
@@ -55,5 +57,6 @@ return [
     'therapies' => 'Instrumental Rehabilitative Therapies',
     'trainer' => 'Trainer|Trainers',
     'training' => 'Training',
+    'weekly_agenda' => 'Weekly agenda',
     'workout' => 'Workout Plan',
 ];

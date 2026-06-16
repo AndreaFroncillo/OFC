@@ -1,0 +1,29 @@
+/* Navbar */
+
+.nav-custom a:hover{
+    color: var(--p);
+}
+
+.nav-link.text-w.show, 
+.nav-link.text-w:focus, 
+.nav-link.text-w:active {
+    color: var(--p);
+    background-color: transparent;
+}
+
+.dropdown-item,
+.dropdown-item:hover {
+    border-radius: 8px !important;
+}
+
+/* Flags */
+
+.btn-flag{
+    border-radius: 2px;
+}
+
+.ul-flag{
+    min-width: auto;
+    margin-top: 10px;
+    background-color: #222;
+}

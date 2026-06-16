@@ -1,0 +1,61 @@
+/* Classi Custom */
+
+.bg-b {
+    background-color: var(--b);
+}
+
+.bg-bl {
+    background-color: var(--bl);
+}
+
+.bg-i {
+    background-color: var(--i);
+}
+
+.bg-p {
+    background-color: var(--p);
+}
+
+.bg-v {
+    background-color: var(--v);
+}
+
+.bg-vf {
+    background-color: var(--vf);
+}
+
+.bg-yn {
+    background-color: var(--yn);
+}
+
+.text-b {
+    color: var(--b);
+}
+
+.text-bl {
+    color: var(--bl);
+}
+
+.text-i {
+    color: var(--i);
+}
+
+.text-p {
+    color: var(--p);
+}
+
+.text-v {
+    color: var(--v);
+}
+
+.text-vf {
+    color: var(--vf);
+}
+
+.text-w {
+    color: var(--w);
+}
+
+.text-yn {
+    color: var(--yn);
+}

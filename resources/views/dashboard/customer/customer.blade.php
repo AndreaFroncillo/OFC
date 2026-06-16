@@ -1,4 +1,4 @@
-<x-layout :hideSubscription="auth()->check() && auth()->user()->isActive()" :fullHeight="true" title="{{__('dashboards.customer')}}">
+<x-layout :dashboard="true" :hideSubscription="auth()->check() && auth()->user()->isActive()" :fullHeight="true" title="{{__('dashboards.customer')}}">
     <header>
         <div class="container-fluid vh-100 img-custom">
             <div class="row h-75 justify-content-center align-items-center">

@@ -1,4 +1,4 @@
-<x-layout :hideSubscription="true" :fullHeight="true" title="{{__('dashboards.trainer')}}">
+<x-layout dashboard :hideSubscription="true" :fullHeight="true" title="{{__('dashboards.trainer')}}">
    <header>
         <div class="container-fluid vh-100 img-custom">
             <div class="row h-75 justify-content-center align-items-center">
