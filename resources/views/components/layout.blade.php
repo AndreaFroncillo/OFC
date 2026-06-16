@@ -27,6 +27,12 @@
 
     @if($dashboard)
     <div class="dashboard-shell">
+        <div class="dashboard-sidebar-overlay" id="dashboardSidebarOverlay"></div>
+
+        <button class="dashboard-mobile-sidebar-toggle" id="dashboardMobileSidebarToggle" type="button" aria-label="Open sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+
         @if(auth()->user()?->isAdmin())
         <x-admin::admin-navbar />
         @elseif(auth()->user()?->isTrainer())

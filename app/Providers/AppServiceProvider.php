@@ -22,19 +22,52 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Build Components for Admin
         Blade::anonymousComponentPath(
             resource_path('views/dashboard/admin/components'),
             'admin'
         );
 
         Blade::anonymousComponentPath(
+            resource_path('views/dashboard/admin/widgets'),
+            'admin'
+        );
+
+        Blade::anonymousComponentPath(
+            resource_path('views/dashboard/admin/partials'),
+            'admin'
+        );
+
+        // Build Components for Trainer
+        Blade::anonymousComponentPath(
+            resource_path('views/dashboard/trainer/components'),
+            'trainer'
+        );
+
+        Blade::anonymousComponentPath(
+            resource_path('views/dashboard/trainer/widgets'),
+            'trainer'
+        );
+
+        Blade::anonymousComponentPath(
+            resource_path('views/dashboard/trainer/partials'),
+            'trainer'
+        );
+
+        // Build Components for Customer
+        Blade::anonymousComponentPath(
             resource_path('views/dashboard/customer/components'),
             'customer'
         );
 
         Blade::anonymousComponentPath(
-            resource_path('views/dashboard/trainer/components'),
-            'trainer'
+            resource_path('views/dashboard/customer/widgets'),
+            'customer'
+        );
+
+        Blade::anonymousComponentPath(
+            resource_path('views/dashboard/customer/partials'),
+            'customer'
         );
     }
 }

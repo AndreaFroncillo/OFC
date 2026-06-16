@@ -1,26 +1,31 @@
-<x-layout :dashboard="true" :fullHeight="true" :hideSubscription="true" title="{{__('dashboards.admin')}}">
-    <header>
-        <div class="container-fluid px-0 vh-100 img-custom">
-            <div class="row h-75 justify-content-center align-items-center">
-                <div class="col-12 d-flex flex-column align-items-center">
-                    <h1 class="text-center display-1 text-yn shadow title">
-                        OLIMPIA CLUB HOUSE
-                    </h1>
-                    <p class="lead display-3 under-title text-yn text-center">{{__('general.tagline')}}</p>
-                    <p class="text-center text-w display-4 under-title">{{__('general.description')}}</p>
-                    <div class="row justify-content-center align items-center"></div>
-                    <div class="cta-buttons">
-                        @guest
-                        <a href="{{ route('register') }}" class="btn btn-primary-custom text-black">{{Str::upper(__('auth.register_now'))}}</a>
-                        <a href="{{ route('login') }}" class="btn btn-outline-custom">{{Str::upper(__('auth.login_now'))}}</a>
-                        @endguest
-                        @auth
-                        <a href="#iscrizione" class="btn btn-primary-custom text-black">{{Str::upper(__('general.subscribe_now'))}}</a>
-                        <a href="#corsi" class="btn btn-outline-custom">{{Str::upper(__('general.show_classes'))}}</a>
-                        @endauth
-                    </div>
-                </div>
+<x-layout :dashboard="true" :fullHeight="true" :hideSubscription="true" title="{{ __('dashboards.admin') }}">
+    <section class="dashboard-page">
+        <div class="dashboard-page-header">
+            <div>
+                <p class="dashboard-kicker">{{ __('dashboards.admin') }}</p>
+                <h1 class="dashboard-title">
+                    Ciao {{ auth()->user()->name }}, bentornato
+                </h1>
+                <p class="dashboard-subtitle">
+                    Panoramica generale di utenti, lezioni, prenotazioni e attività della palestra.
+                </p>
+            </div>
+
+            <div class="dashboard-header-actions">
+                <a href="{{ route('homepage') }}" class="btn btn-outline-custom">
+                    Vai al sito
+                </a>
             </div>
         </div>
-    </header>
+
+        <x-admin::stats-cards />
+
+        <div class="dashboard-grid">
+            <x-admin::quick-actions />
+
+            <x-admin::latest-users />
+
+            <x-admin::next-lessons />
+        </div>
+    </section>
 </x-layout>
