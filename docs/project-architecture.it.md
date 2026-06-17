@@ -44,17 +44,63 @@ Le viste sono separate:
 
 ---
 
+## Dashboard Service Layer
+
+Per evitare l'accumulo di logica all'interno del DashboardController è stato introdotto un livello dedicato ai servizi dashboard.
+
+Servizi attualmente presenti:
+
+* App\Services\Dashboard\AdminDashboardService
+
+Responsabilità:
+
+* recupero dati dashboard
+* preparazione dati per i widget
+* trasformazione dei model in dati pronti per la view
+* centralizzazione della logica dashboard
+
+Obiettivo:
+
+* mantenere i controller leggeri
+* migliorare la manutenibilità
+* favorire la crescita futura della dashboard
+
+---
+
+## Dashboard Data Mapping Layer
+
+La preparazione dei dati destinati ai widget viene effettuata tramite Collection Mapping.
+
+Esempio:
+
+Lesson Model
+
+↓
+
+Dashboard Mapping
+
+↓
+
+Array pronto per Blade
+
+Il mapping si occupa di:
+
+* formattazione date
+* formattazione orari
+* calcolo percentuali
+* badge dinamici
+* informazioni trainer
+* occupazione lezioni
+
+Le Blade ricevono esclusivamente dati già pronti alla visualizzazione.
+
+---
+
 ## Layout
 
 È presente un layout unico:
 
 * resources/views/components/layout.blade.php
-
-Il layout supporta la modalità dashboard tramite la prop:
-
-* dashboard
-
-Quando dashboard è true, viene caricata la sidebar corrispondente al ruolo autenticato.
 
 Props principali:
 
@@ -62,98 +108,55 @@ Props principali:
 * fullHeight
 * hideSubscription
 
+Quando dashboard è true viene caricata automaticamente la sidebar del ruolo autenticato.
+
 ---
 
 ## Sidebar
 
-Sono state create sidebar role-based:
+Sono presenti sidebar dedicate per:
 
-* Admin Sidebar
-* Trainer Sidebar
-* Customer Sidebar
-
-Le sidebar utilizzano:
-
-* resources/js/dashboard-sidebar.js
-* resources/css/dashboard-sidebar.css
+* Admin
+* Trainer
+* Customer
 
 Funzionalità:
 
-* apertura/chiusura tramite pulsante
-* apertura temporanea su hover
-* apertura persistente tramite toggle
-* dropdown interni
+* apertura/chiusura
+* apertura hover
+* apertura persistente
+* dropdown
 * supporto mobile
-* overlay mobile
-* chiusura tramite click esterno
+* overlay
 * chiusura tramite ESC
-* lingua in dropdown
-* profilo utente in footer sidebar
-* delay hover per evitare aperture involontarie
-
----
-
-## Responsive Mobile Navigation
-
-La sidebar supporta la navigazione mobile.
-
-Funzionalità:
-
-* sidebar nascosta di default
-* apertura tramite pulsante mobile
-* overlay di chiusura
-* click esterno per chiusura
-* supporto responsive fino a 991px
+* selettore lingua
+* profilo utente
 
 ---
 
 ## Widget Architecture
 
-Per le dashboard è stata introdotta una struttura dedicata.
-
 ### Admin
 
-* resources/views/dashboard/admin/components
-* resources/views/dashboard/admin/widgets
-* resources/views/dashboard/admin/partials
+* components
+* widgets
+* partials
 
 ### Trainer
 
-* resources/views/dashboard/trainer/components
-* resources/views/dashboard/trainer/widgets
-* resources/views/dashboard/trainer/partials
+* components
+* widgets
+* partials
 
 ### Customer
 
-* resources/views/dashboard/customer/components
-* resources/views/dashboard/customer/widgets
-* resources/views/dashboard/customer/partials
-
----
-
-## Namespace Blade
-
-Registrati tramite:
-
-* app/Providers/AppServiceProvider.php
-
-Namespace disponibili:
-
-* admin
-* trainer
-* customer
-
-per:
-
-* Components
-* Widgets
-* Partials
+* components
+* widgets
+* partials
 
 ---
 
 ## Dashboard Admin
-
-È stata avviata la nuova Dashboard Admin.
 
 ### Header Dashboard
 
@@ -167,100 +170,111 @@ Comprende:
 
 ### Stats Cards
 
-Widget statistico iniziale composto da:
+Widget KPI iniziale.
 
-* utenti totali
+Comprende:
+
+* utenti
 * clienti attivi
 * trainer
-* lezioni programmate
+* lezioni
 * prenotazioni
-* incassi mensili
+* incassi
 
-Attualmente i dati sono statici e fungeranno da placeholder fino all'integrazione con il database.
-
-File:
-
-* resources/views/dashboard/admin/widgets/stats-cards.blade.php
+Attualmente utilizza dati placeholder.
 
 ---
 
 ### Quick Actions
 
-Widget dedicato alle azioni rapide amministrative.
-
-File:
-
-* resources/views/dashboard/admin/widgets/quick-actions.blade.php
+Widget per le operazioni rapide amministrative.
 
 Obiettivi:
 
-* accesso rapido alle principali sezioni gestionali
-* riduzione del numero di click
-* centralizzazione delle operazioni più frequenti
-
-Attualmente i collegamenti fungono da placeholder fino all'implementazione delle relative pagine.
+* ridurre il numero di click
+* centralizzare le operazioni più frequenti
 
 ---
 
 ### Latest Users
 
-Widget dedicato agli ultimi utenti iscritti.
+Widget dedicato agli ultimi iscritti.
+
+Informazioni mostrate:
+
+* nome
+* assicurazione
+* abbonamento
+* stato generale
+
+Logica assicurazione:
+
+* Verde → oltre 60 giorni
+* Giallo → entro 60 giorni
+* Rosso → assente o scaduta
+
+Logica abbonamento:
+
+* Verde → attivo
+* Giallo → in scadenza
+* Rosso → assente, scaduto o cancellato
+
+L'assicurazione rappresenta sempre il controllo prioritario.
+
+---
+
+### Next Lessons
+
+Nuovo widget dedicato alle prossime lezioni programmate.
 
 File:
 
-* resources/views/dashboard/admin/widgets/latest-users.blade.php
+* resources/views/dashboard/admin/widgets/next-lessons.blade.php
 
-Obiettivi:
+Dati visualizzati:
 
-* monitoraggio rapido dei nuovi iscritti
-* controllo dello stato assicurativo
-* controllo dello stato abbonamento
-* individuazione immediata delle criticità
+* data lezione
+* orario
+* trainer
+* prenotazioni
+* stato occupazione
 
-Logica prevista:
+Funzionalità:
 
-#### Assicurazione
+* recupero automatico delle prossime 5 lezioni
+* esclusione delle lezioni già iniziate
+* ordinamento cronologico
+* caricamento relazioni trainer e prenotazioni
+* badge dinamici
+* barra occupazione posti
+* supporto localizzazione
 
-* Verde → scadenza superiore a 60 giorni
-* Giallo → scadenza entro 60 giorni
-* Rosso → assicurazione assente o scaduta
+Stati:
 
-#### Abbonamento
-
-* Verde → attivo
-* Giallo → vicino alla scadenza
-* Rosso → assente, scaduto o cancellato
-
-L'assicurazione rappresenta il controllo prioritario.
+* Disponibile
+* Quasi piena
+* Completa
 
 ---
 
 ## Lesson Recurrence Architecture
 
-Per supportare la programmazione ricorrente delle lezioni è stata introdotta una nuova architettura.
-
 ### LessonTemplate
 
-La tabella:
+Tabella:
 
 * lesson_templates
 
-rappresenta le regole ricorrenti delle lezioni.
-
-Esempio:
-
-* Pilates
-* Ogni venerdì
-* 19:30 - 20:30
+Rappresenta le regole ricorrenti delle lezioni.
 
 Contiene:
 
 * trainer
-* giorno della settimana
+* giorno settimana
 * orario
 * prezzo
 * capienza
-* regole di prenotazione
+* prenotabilità
 
 Model:
 
@@ -270,19 +284,19 @@ Model:
 
 ### Lesson
 
-La tabella:
+Tabella:
 
 * lessons
 
-continua a rappresentare la singola lezione reale presente nel calendario.
+Rappresenta la singola lezione reale.
 
-Ogni lezione può essere:
+Può essere:
 
 * modificata
-* annullata
 * spostata
+* annullata
 
-senza alterare il template di origine.
+senza alterare il template.
 
 Model:
 
@@ -304,15 +318,15 @@ Booking
 
 ---
 
-### Generazione Automatica Lezioni
+### Generazione Automatica
 
-È stato introdotto il comando:
+Comando:
 
 ```bash
 php artisan gym:generate-lessons
 ```
 
-Opzioni:
+Supporta:
 
 ```bash
 php artisan gym:generate-lessons --weeks=8
@@ -320,56 +334,73 @@ php artisan gym:generate-lessons --weeks=8
 
 Funzionalità:
 
-* genera lezioni future partendo dai template attivi
-* evita duplicazioni
-* aggiorna lezioni già esistenti
-* ignora lezioni già passate
-* supporta generazione multi-settimana
+* generazione multi-settimana
+* aggiornamento lezioni esistenti
+* prevenzione duplicati
+* esclusione lezioni passate
 
 ---
 
 ### Scheduler
 
-La generazione automatica è gestita tramite Laravel Scheduler.
+Laravel Scheduler esegue automaticamente:
+
+```bash
+php artisan gym:generate-lessons
+```
 
 Configurazione attuale:
 
 * ogni lunedì alle 02:00
 
-Obiettivo:
-
-* mantenere sempre disponibili le settimane future prenotabili
-
 ---
 
-### Seeder
+## Timezone Management
 
-#### LessonTemplateSeeder
+Il progetto utilizza:
 
-Nuovo seeder responsabile della generazione delle regole ricorrenti.
+```env
+APP_TIMEZONE=Europe/Rome
+```
 
-Genera:
+Configurazione:
 
-* lesson_templates
-
-#### LessonSeeder
-
-Mantenuto come Legacy Seeder.
+```php
+'timezone' => env('APP_TIMEZONE', 'UTC')
+```
 
 Motivazione:
 
-* riferimento storico
-* supporto alla migrazione dell'architettura
+Tutta la logica della palestra dipende dal fuso orario locale:
 
-Non viene più richiamato dal DatabaseSeeder.
+* lezioni future
+* lezioni passate
+* prenotazioni
+* assicurazioni
+* abbonamenti
+* scheduler
+
+---
+
+## Localizzazione
+
+Sono stati introdotti file lingua dedicati ai widget lezioni:
+
+* lang/it/lesson.php
+* lang/en/lesson.php
+
+Supportano:
+
+* badge lezioni
+* stati occupazione
+* prenotazioni
+* etichette widget
 
 ---
 
 ## CSS
 
-Il CSS è stato modularizzato.
-
-File attualmente presenti:
+Moduli principali:
 
 * variables.css
 * utilities.css
@@ -380,13 +411,9 @@ File attualmente presenti:
 * dashboard-sidebar.css
 * dashboard-widgets.css
 
-Il file style.css viene mantenuto temporaneamente come riferimento durante la migrazione.
-
 ---
 
-## Convenzioni Git
-
-Ogni milestone viene salvata tramite commit semantici.
+## Git Conventions
 
 Tipologie utilizzate:
 
@@ -395,8 +422,6 @@ Tipologie utilizzate:
 * refactor:
 * docs:
 
-Documentazione e codice devono rimanere sincronizzati ad ogni milestone significativa.
-
 ---
 
 ## Milestones
@@ -404,6 +429,7 @@ Documentazione e codice devono rimanere sincronizzati ad ogni milestone signific
 * refactor: build dashboard architecture and role-based sidebar navigation
 * feat: add admin dashboard widgets and mobile sidebar support
 * feat: implement admin dashboard widgets and recurring lesson architecture
+* feat: add next lessons widget and admin dashboard service
 
 ---
 
@@ -411,18 +437,18 @@ Documentazione e codice devono rimanere sincronizzati ad ogni milestone signific
 
 Dashboard Admin:
 
-* Next Lessons Widget
 * KPI reali da database
 * grafici dashboard
-* gestione utenti iscritti
-* gestione rinnovi
-* gestione assicurazioni
+* attività recenti
+* scadenze assicurazioni
+* scadenze abbonamenti
+* gestione utenti
 
 Successivamente:
 
 * Dashboard Trainer
 * Dashboard Customer
-* Sistema prenotazioni avanzato
-* Pagamenti
-* Abbonamenti
-* Gestione ingressi
+* traduzione contenuti gestionali
+* prenotazioni avanzate
+* pagamenti
+* gestione ingressi

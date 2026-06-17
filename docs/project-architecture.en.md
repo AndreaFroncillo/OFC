@@ -14,17 +14,17 @@ The project is structured as a gym management platform with a clear separation b
 
 ## Main Roles
 
-The platform currently supports:
+Supported roles:
 
 * admin
 * trainer
 * customer
 
-Each user belongs to a role through:
+Users belong to a role through:
 
 * users.role_id
 
-Available helper methods:
+Helper methods:
 
 * isAdmin()
 * isTrainer()
@@ -36,8 +36,6 @@ Available helper methods:
 
 A single DashboardController handles dashboard routing.
 
-Authenticated users are automatically redirected to the correct dashboard based on their role.
-
 Views:
 
 * resources/views/dashboard/admin/admin.blade.php
@@ -46,17 +44,65 @@ Views:
 
 ---
 
+## Dashboard Service Layer
+
+A dedicated dashboard service layer has been introduced.
+
+Current services:
+
+* App\Services\Dashboard\AdminDashboardService
+
+Responsibilities:
+
+* dashboard data retrieval
+* widget data preparation
+* model transformation
+* dashboard business logic centralization
+
+Goals:
+
+* lightweight controllers
+* maintainability
+* scalability
+
+---
+
+## Dashboard Data Mapping Layer
+
+Dashboard data is prepared using Collection Mapping.
+
+Flow:
+
+Lesson Model
+
+↓
+
+Dashboard Mapping
+
+↓
+
+Blade-ready Array
+
+Responsibilities:
+
+* date formatting
+* time formatting
+* percentage calculations
+* dynamic badges
+* trainer information
+* lesson occupancy data
+
+Views receive only presentation-ready data.
+
+---
+
 ## Layout
 
-A shared layout is used:
+Shared layout:
 
 * resources/views/components/layout.blade.php
 
-Dashboard mode is enabled through:
-
-* dashboard
-
-Main props:
+Props:
 
 * dashboard
 * fullHeight
@@ -66,94 +112,49 @@ Main props:
 
 ## Sidebar
 
-Role-based sidebars have been implemented:
+Dedicated sidebars for:
 
-* Admin Sidebar
-* Trainer Sidebar
-* Customer Sidebar
-
-Files:
-
-* resources/js/dashboard-sidebar.js
-* resources/css/dashboard-sidebar.css
+* Admin
+* Trainer
+* Customer
 
 Features:
 
-* open/close toggle
+* toggle open/close
 * hover expansion
-* persistent expansion
-* nested dropdowns
+* persistent mode
+* dropdown menus
 * mobile support
-* mobile overlay
-* outside click close
+* overlay
 * ESC close
 * language selector
 * user profile section
-* hover delay protection
-
----
-
-## Responsive Mobile Navigation
-
-The sidebar fully supports mobile devices.
-
-Features:
-
-* hidden by default
-* mobile toggle button
-* overlay close support
-* click outside to close
-* responsive support up to 991px
 
 ---
 
 ## Widget Architecture
 
-Dedicated widget structure introduced.
-
 ### Admin
 
-* resources/views/dashboard/admin/components
-* resources/views/dashboard/admin/widgets
-* resources/views/dashboard/admin/partials
+* components
+* widgets
+* partials
 
 ### Trainer
 
-* resources/views/dashboard/trainer/components
-* resources/views/dashboard/trainer/widgets
-* resources/views/dashboard/trainer/partials
+* components
+* widgets
+* partials
 
 ### Customer
 
-* resources/views/dashboard/customer/components
-* resources/views/dashboard/customer/widgets
-* resources/views/dashboard/customer/partials
-
----
-
-## Blade Namespaces
-
-Registered through:
-
-* app/Providers/AppServiceProvider.php
-
-Namespaces:
-
-* admin
-* trainer
-* customer
-
-for:
-
-* Components
-* Widgets
-* Partials
+* components
+* widgets
+* partials
 
 ---
 
 ## Admin Dashboard
-
-The new Admin Dashboard has been initialized.
 
 ### Dashboard Header
 
@@ -161,26 +162,24 @@ Includes:
 
 * personalized greeting
 * dashboard description
-* quick access to public website
+* public website shortcut
 
 ---
 
 ### Stats Cards
 
-Initial KPI widget containing:
+Initial KPI widget.
 
-* total users
+Includes:
+
+* users
 * active customers
 * trainers
-* scheduled lessons
+* lessons
 * bookings
-* monthly revenue
+* revenue
 
-Currently populated with placeholder data.
-
-File:
-
-* resources/views/dashboard/admin/widgets/stats-cards.blade.php
+Currently uses placeholder data.
 
 ---
 
@@ -188,54 +187,75 @@ File:
 
 Administrative quick actions widget.
 
-File:
+Goals:
 
-* resources/views/dashboard/admin/widgets/quick-actions.blade.php
-
-Purpose:
-
-* fast access to management areas
-* reduced navigation time
-* centralized access to common actions
-
-Currently uses placeholder links.
+* reduce navigation time
+* centralize common operations
 
 ---
 
 ### Latest Users
 
-Widget showing recently registered members.
+Widget displaying recent members.
 
-File:
+Displays:
 
-* resources/views/dashboard/admin/widgets/latest-users.blade.php
+* name
+* insurance
+* subscription
+* overall status
 
-Purpose:
+Insurance logic:
 
-* monitor new members
-* monitor insurance status
-* monitor subscription status
-* quickly identify critical situations
-
-Insurance status:
-
-* Green → expires in more than 60 days
+* Green → more than 60 days
 * Yellow → expires within 60 days
-* Red → expired or missing
+* Red → missing or expired
 
-Subscription status:
+Subscription logic:
 
 * Green → active
 * Yellow → close to expiration
 * Red → missing, expired or cancelled
 
-Insurance status has higher priority.
+Insurance status always has priority.
+
+---
+
+### Next Lessons
+
+New widget displaying upcoming scheduled lessons.
+
+File:
+
+* resources/views/dashboard/admin/widgets/next-lessons.blade.php
+
+Displays:
+
+* lesson date
+* lesson time
+* trainer
+* bookings
+* occupancy status
+
+Features:
+
+* automatic retrieval of next 5 lessons
+* excludes already started lessons
+* chronological ordering
+* eager loading of trainer and bookings
+* dynamic badges
+* occupancy progress bar
+* localization support
+
+Statuses:
+
+* Available
+* Almost Full
+* Full
 
 ---
 
 ## Lesson Recurrence Architecture
-
-A recurring lesson architecture has been introduced.
 
 ### LessonTemplate
 
@@ -244,12 +264,6 @@ Table:
 * lesson_templates
 
 Represents recurring lesson rules.
-
-Example:
-
-* Pilates
-* Every Friday
-* 19:30 - 20:30
 
 Contains:
 
@@ -274,11 +288,11 @@ Table:
 
 Represents real calendar occurrences.
 
-Individual lessons may be:
+Can be:
 
 * edited
-* cancelled
 * moved
+* cancelled
 
 without affecting the original template.
 
@@ -302,7 +316,7 @@ Booking
 
 ---
 
-### Automatic Lesson Generation
+### Automatic Generation
 
 Command:
 
@@ -310,7 +324,7 @@ Command:
 php artisan gym:generate-lessons
 ```
 
-Options:
+Supports:
 
 ```bash
 php artisan gym:generate-lessons --weeks=8
@@ -318,56 +332,73 @@ php artisan gym:generate-lessons --weeks=8
 
 Features:
 
-* generates future lessons from active templates
-* prevents duplicates
-* updates existing lessons
-* ignores past lessons
-* supports multi-week generation
+* multi-week generation
+* duplicate prevention
+* existing lesson updates
+* past lesson exclusion
 
 ---
 
 ### Scheduler
 
-Automatic generation is handled through Laravel Scheduler.
+Laravel Scheduler automatically executes:
+
+```bash
+php artisan gym:generate-lessons
+```
 
 Current configuration:
 
 * every Monday at 02:00
 
-Goal:
+---
 
-* always keep future lessons available for booking
+## Timezone Management
+
+The project uses:
+
+```env
+APP_TIMEZONE=Europe/Rome
+```
+
+Configuration:
+
+```php
+'timezone' => env('APP_TIMEZONE', 'UTC')
+```
+
+Reason:
+
+All gym business logic depends on local time:
+
+* future lessons
+* past lessons
+* bookings
+* insurance policies
+* subscriptions
+* scheduler
 
 ---
 
-### Seeders
+## Localization
 
-#### LessonTemplateSeeder
+Dedicated lesson language files introduced:
 
-Primary recurring lesson seeder.
+* lang/it/lesson.php
+* lang/en/lesson.php
 
-Creates:
+Supports:
 
-* lesson_templates
-
-#### LessonSeeder
-
-Maintained as a Legacy Seeder.
-
-Purpose:
-
-* historical reference
-* migration support
-
-No longer executed by DatabaseSeeder.
+* lesson badges
+* occupancy states
+* booking labels
+* widget labels
 
 ---
 
 ## CSS Architecture
 
-CSS has been modularized.
-
-Current modules:
+Main modules:
 
 * variables.css
 * utilities.css
@@ -378,13 +409,9 @@ Current modules:
 * dashboard-sidebar.css
 * dashboard-widgets.css
 
-The legacy style.css file is temporarily retained as migration reference.
-
 ---
 
 ## Git Conventions
-
-Every milestone is stored using semantic commits.
 
 Supported prefixes:
 
@@ -393,8 +420,6 @@ Supported prefixes:
 * refactor:
 * docs:
 
-Documentation and source code must remain synchronized after each significant milestone.
-
 ---
 
 ## Milestones
@@ -402,6 +427,7 @@ Documentation and source code must remain synchronized after each significant mi
 * refactor: build dashboard architecture and role-based sidebar navigation
 * feat: add admin dashboard widgets and mobile sidebar support
 * feat: implement admin dashboard widgets and recurring lesson architecture
+* feat: add next lessons widget and admin dashboard service
 
 ---
 
@@ -409,18 +435,18 @@ Documentation and source code must remain synchronized after each significant mi
 
 Admin Dashboard:
 
-* Next Lessons Widget
-* Real database KPIs
-* Dashboard charts
-* Member management
-* Renewal management
-* Insurance management
+* real database KPIs
+* dashboard charts
+* recent activities
+* insurance expirations
+* subscription expirations
+* member management
 
 Future modules:
 
 * Trainer Dashboard
 * Customer Dashboard
-* Advanced bookings
-* Payments
-* Subscriptions
-* Entry management
+* management content localization
+* advanced bookings
+* payments
+* entry management
