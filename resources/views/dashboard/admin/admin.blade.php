@@ -25,7 +25,7 @@
 
             <x-admin::latest-users />
 
-            <x-admin::next-lessons />
+            <x-admin::next-lessons :nextLessons="$nextLessons"/>
         </div>
     </section>
 </x-layout>

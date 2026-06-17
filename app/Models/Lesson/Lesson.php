@@ -63,6 +63,11 @@ class Lesson extends Model
         });
     }
 
+    public function scopeScheduled($query)
+    {
+        return $query->where('status', self::STATUS_SCHEDULED);
+    }
+
     public function availableSpots()
     {
         return $this->max_participants - $this->bookings()->count();

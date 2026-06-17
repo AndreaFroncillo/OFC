@@ -26,10 +26,19 @@
     margin-bottom: 0.5rem;
 }
 
-.dashboard-title {
+.dashboard-title,
+.dashboard-widget-title {
     color: var(--dark-color);
     font-weight: 800;
+}
+
+.dashboard-title {
     margin-bottom: 0.5rem;
+}
+
+.dashboard-widget-title {
+    font-size: 1.5rem;
+    margin-bottom: 0;
 }
 
 .dashboard-subtitle {
@@ -48,6 +57,8 @@
     color: var(--dark-color);
 }
 
+/* Stats */
+
 .dashboard-stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -55,16 +66,20 @@
     margin-bottom: 2rem;
 }
 
-.dashboard-stat-card {
+.dashboard-stat-card,
+.dashboard-widget {
     background: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255, 0, 110, 0.08);
+}
+
+.dashboard-stat-card {
     border-radius: 22px;
     padding: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 0, 110, 0.08);
 }
 
 .dashboard-stat-card:hover {
@@ -72,16 +87,23 @@
     box-shadow: 0 20px 45px rgba(255, 0, 110, 0.16);
 }
 
+.dashboard-stat-icon,
+.dashboard-widget-header-icon,
+.dashboard-quick-action i,
+.dashboard-avatar,
+.dashboard-lesson-date {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--w);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .dashboard-stat-icon {
     width: 64px;
     height: 64px;
     min-width: 64px;
     border-radius: 18px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: var(--w);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 1.5rem;
 }
 
@@ -98,18 +120,18 @@
     margin-bottom: 0;
 }
 
+/* Widget Base */
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+    align-items: start;
 }
 
 .dashboard-widget {
-    background: white;
     border-radius: 24px;
     padding: 1.5rem;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    border: 1px solid rgba(255, 0, 110, 0.08);
 }
 
 .dashboard-widget-header {
@@ -119,24 +141,14 @@
     margin-bottom: 1.5rem;
 }
 
-.dashboard-widget-title {
-    color: var(--dark-color);
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0;
-}
-
 .dashboard-widget-header-icon {
     width: 46px;
     height: 46px;
     border-radius: 14px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: var(--w);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.1rem;
 }
+
+/* Quick Actions */
 
 .dashboard-quick-actions-grid {
     display: grid;
@@ -164,11 +176,6 @@
     height: 42px;
     min-width: 42px;
     border-radius: 14px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: var(--w);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .dashboard-quick-action:hover {
@@ -177,6 +184,8 @@
     box-shadow: 0 15px 35px rgba(255, 0, 110, 0.16);
     background: var(--accent-color);
 }
+
+/* Lists */
 
 .dashboard-list {
     display: flex;
@@ -193,11 +202,27 @@
     background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
     border: 1px solid rgba(255, 0, 110, 0.08);
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .dashboard-list-item:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(255, 0, 110, 0.12);
+    color: inherit;
+}
+
+.dashboard-list-arrow {
+    color: var(--primary-color);
+    opacity: 0;
+    transition: all 0.25s ease;
+    align-self: center;
+}
+
+.dashboard-list-item:hover .dashboard-list-arrow {
+    opacity: 1;
+    transform: translateX(4px);
 }
 
 .dashboard-avatar {
@@ -205,11 +230,6 @@
     height: 46px;
     min-width: 46px;
     border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: var(--w);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-weight: 800;
     font-size: 0.9rem;
 }
@@ -231,6 +251,8 @@
     font-size: 0.85rem;
     font-weight: 600;
 }
+
+/* Badges */
 
 .dashboard-badge {
     border-radius: 999px;
@@ -255,6 +277,8 @@
     color: var(--primary-color);
 }
 
+/* Widget Links */
+
 .dashboard-widget-link {
     display: inline-flex;
     align-items: center;
@@ -271,6 +295,8 @@
     transform: translateX(4px);
 }
 
+/* Members */
+
 .dashboard-member-meta {
     display: flex;
     flex-direction: column;
@@ -284,22 +310,91 @@
     color: var(--dark-color);
 }
 
-.dashboard-list-item {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+/* Lessons */
+
+.dashboard-lesson-item {
+    align-items: flex-start;
 }
 
-.dashboard-list-arrow {
+.dashboard-lesson-date {
+    width: 54px;
+    min-width: 54px;
+    height: 62px;
+    border-radius: 16px;
+    flex-direction: column;
+}
+
+.dashboard-lesson-date span {
+    font-size: 1.35rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.dashboard-lesson-date small {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+.dashboard-lesson-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    margin-top: 0.45rem;
+    color: #666;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.dashboard-lesson-meta i {
     color: var(--primary-color);
-    opacity: 0;
-    transition: all 0.25s ease;
+    margin-right: 0.25rem;
 }
 
-.dashboard-list-item:hover .dashboard-list-arrow {
-    opacity: 1;
-    transform: translateX(4px);
+.dashboard-lesson-progress {
+    width: 100%;
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-top: 0.75rem;
 }
+
+.dashboard-lesson-progress div {
+    width: var(--progress);
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Empty State */
+
+.dashboard-empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #666;
+}
+
+.dashboard-empty-state i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-empty-state p {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+.dashboard-lesson-empty-bookings {
+    margin: 0.65rem 0 0;
+    color: #777;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+/* Responsive */
 
 @media (max-width: 1199px) {
     .dashboard-stats-grid {
@@ -318,13 +413,25 @@
     }
 
     .dashboard-stats-grid,
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 767px) {
+    .dashboard-grid,
     .dashboard-quick-actions-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-lesson-item {
+        flex-direction: column;
+    }
+
+    .dashboard-lesson-date {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        padding: 0.75rem;
+        flex-direction: row;
+        gap: 0.4rem;
+    }
+
+    .dashboard-list-arrow {
+        display: none;
     }
 }
