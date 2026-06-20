@@ -28,6 +28,13 @@ class InsurancePolicy extends Model
     public const STATUS_EXPIRED = 'expired';
     public const STATUS_CANCELLED = 'cancelled';
 
+    public const PAYMENT_SOURCE_STANDALONE = 'standalone';
+    public const PAYMENT_SOURCE_REGISTRATION = 'registration';
+    public const PAYMENT_SOURCE_SUBSCRIPTION = 'subscription';
+    public const PAYMENT_SOURCE_ENTRY_PACKAGE = 'entry_package';
+    public const PAYMENT_SOURCE_BOOKING = 'booking';
+    public const PAYMENT_SOURCE_SERVICE_BOOKING = 'service_booking';
+
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
@@ -102,6 +109,36 @@ class InsurancePolicy extends Model
                 $query->where('status', self::STATUS_EXPIRED)
                     ->orWhereDate('end_date', '<', now());
             });
+    }
+
+    public function scopeStandalonePayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_STANDALONE);
+    }
+
+    public function scopeRegistrationPayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_REGISTRATION);
+    }
+
+    public function scopeSubscriptionPayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_SUBSCRIPTION);
+    }
+
+    public function scopeEntryPackagePayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_ENTRY_PACKAGE);
+    }
+
+    public function scopeBookingPayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_BOOKING);
+    }
+
+    public function scopeServiceBookingPayment($query)
+    {
+        return $query->where('payment_source', self::PAYMENT_SOURCE_SERVICE_BOOKING);
     }
 
     public function activate()

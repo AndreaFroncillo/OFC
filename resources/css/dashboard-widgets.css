@@ -80,11 +80,18 @@
     align-items: center;
     gap: 1rem;
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
 .dashboard-stat-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 20px 45px rgba(255, 0, 110, 0.16);
+    color: inherit;
+}
+
+.dashboard-stat-content {
+    flex: 1;
 }
 
 .dashboard-stat-icon,
@@ -118,6 +125,36 @@
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 0;
+}
+
+.dashboard-stat-value-danger {
+    color: var(--primary-color);
+}
+
+.dashboard-stat-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+}
+
+.dashboard-stat-trend-success {
+    color: #198754;
+}
+
+.dashboard-stat-trend-neutral {
+    color: black;
+}
+
+.dashboard-stat-trend-danger {
+    color: var(--primary-color);
+}
+
+.dashboard-stat-description {
+    color: #777;
+    font-size: 0.78rem;
+    font-weight: 600;
 }
 
 /* Widget Base */
@@ -368,6 +405,13 @@
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
 }
 
+.dashboard-lesson-empty-bookings {
+    margin: 0.65rem 0 0;
+    color: #777;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
 /* Empty State */
 
 .dashboard-empty-state {
@@ -384,13 +428,6 @@
 
 .dashboard-empty-state p {
     margin-bottom: 0;
-    font-weight: 700;
-}
-
-.dashboard-lesson-empty-bookings {
-    margin: 0.65rem 0 0;
-    color: #777;
-    font-size: 0.82rem;
     font-weight: 700;
 }
 
@@ -416,6 +453,10 @@
     .dashboard-grid,
     .dashboard-quick-actions-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-stat-card {
+        align-items: flex-start;
     }
 
     .dashboard-lesson-item {

@@ -16,8 +16,9 @@ class DashboardController extends Controller
         if ($user->isAdmin()) {
 
             $nextLessons = $adminDashboardService->getNextLessons();
+            $statsCards = $adminDashboardService->getStatsCards();
 
-            return view('dashboard.admin.admin', compact('nextLessons'));
+            return view('dashboard.admin.admin', compact('nextLessons', 'statsCards'));
         }
 
         // 2. Controllo Trainer

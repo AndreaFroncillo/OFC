@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <x-admin::stats-cards />
+        <x-admin::stats-cards :statsCards="$statsCards" />
 
         <div class="dashboard-grid">
             <x-admin::quick-actions />
