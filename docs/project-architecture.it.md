@@ -1,20 +1,48 @@
 # Olimpia Club House - Architettura del Progetto
 
-## Stato attuale
+## Panoramica
 
-Il progetto è strutturato come gestionale per palestra con separazione tra:
+Olimpia Club House è una piattaforma gestionale per palestre e centri sportivi sviluppata con Laravel.
 
-* sito pubblico
-* area dashboard
-* area admin
-* area trainer
-* area customer
+L'obiettivo del progetto è fornire un ecosistema completo per la gestione di:
+
+* utenti
+* trainer
+* lezioni
+* prenotazioni
+* abbonamenti
+* assicurazioni sportive
+* servizi aggiuntivi
+* ingressi singoli
+* pacchetti ingressi
+* dashboard gestionali
+
+L'architettura è progettata per essere modulare, estendibile e facilmente manutenibile.
 
 ---
 
-## Ruoli principali
+# Struttura dell'Applicazione
 
-Sono presenti tre ruoli principali:
+L'applicazione è suddivisa in cinque aree principali:
+
+* sito pubblico
+* dashboard
+* area amministrativa
+* area trainer
+* area customer
+
+Questa separazione permette di mantenere indipendenti:
+
+* navigazione pubblica
+* logiche gestionali
+* autorizzazioni
+* interfacce dedicate ai diversi ruoli
+
+---
+
+# Ruoli
+
+Attualmente il sistema supporta tre ruoli principali:
 
 * admin
 * trainer
@@ -22,97 +50,135 @@ Sono presenti tre ruoli principali:
 
 Ogni utente appartiene ad un ruolo tramite:
 
-* users.role_id
+```text
+users.role_id
+```
 
-Metodi helper disponibili:
+Helper disponibili:
 
-* isAdmin()
-* isTrainer()
-* isCustomer()
+```php
+$user->isAdmin();
 
----
+$user->isTrainer();
 
-## Dashboard
-
-È presente un unico DashboardController che reindirizza l'utente alla dashboard corretta in base al ruolo.
-
-Le viste sono separate:
-
-* resources/views/dashboard/admin/admin.blade.php
-* resources/views/dashboard/trainer/trainer.blade.php
-* resources/views/dashboard/customer/customer.blade.php
+$user->isCustomer();
+```
 
 ---
 
-## Dashboard Service Layer
+# Dashboard Routing
 
-Per evitare l'accumulo di logica all'interno del DashboardController è stato introdotto un livello dedicato ai servizi dashboard.
+La navigazione dashboard è centralizzata nel controller:
 
-Servizi attualmente presenti:
+```php
+App\Http\Controllers\Dashboard\DashboardController
+```
 
-* App\Services\Dashboard\AdminDashboardService
+Il controller determina automaticamente il ruolo dell'utente autenticato e carica la dashboard corretta.
+
+Dashboard disponibili:
+
+```text
+resources/views/dashboard/admin/admin.blade.php
+
+resources/views/dashboard/trainer/trainer.blade.php
+
+resources/views/dashboard/customer/customer.blade.php
+```
+
+---
+
+# Dashboard Architecture
+
+Per evitare controller troppo complessi è stato introdotto un Service Layer dedicato.
+
+Attualmente è presente:
+
+```php
+App\Services\Dashboard\AdminDashboardService
+```
 
 Responsabilità:
 
 * recupero dati dashboard
-* preparazione dati per i widget
-* trasformazione dei model in dati pronti per la view
-* centralizzazione della logica dashboard
+* generazione KPI
+* revenue analytics
+* recupero lezioni future
+* trasformazione dati
+* preparazione widget
+* calcolo trend
 
-Obiettivo:
+Obiettivi:
 
-* mantenere i controller leggeri
-* migliorare la manutenibilità
-* favorire la crescita futura della dashboard
+* controller leggeri
+* separazione delle responsabilità
+* manutenzione semplificata
+* futura copertura tramite test
 
 ---
 
-## Dashboard Data Mapping Layer
+# Dashboard Data Mapping Layer
 
-La preparazione dei dati destinati ai widget viene effettuata tramite Collection Mapping.
+Le Blade non ricevono direttamente i model.
 
-Esempio:
+La trasformazione avviene tramite Collection Mapping.
 
-Lesson Model
+Flusso:
 
+```text
+Model
 ↓
-
-Dashboard Mapping
-
+Dashboard Service
 ↓
+Mapping
+↓
+Array Blade Ready
+↓
+View
+```
 
-Array pronto per Blade
-
-Il mapping si occupa di:
+Il mapping gestisce:
 
 * formattazione date
 * formattazione orari
-* calcolo percentuali
+* localizzazione
 * badge dinamici
-* informazioni trainer
+* progress bar
 * occupazione lezioni
+* dati trainer
+* trend KPI
 
-Le Blade ricevono esclusivamente dati già pronti alla visualizzazione.
-
----
-
-## Layout
-
-È presente un layout unico:
-
-* resources/views/components/layout.blade.php
-
-Props principali:
-
-* dashboard
-* fullHeight
-* hideSubscription
-
-Quando dashboard è true viene caricata automaticamente la sidebar del ruolo autenticato.
+Le view ricevono esclusivamente dati pronti per la presentazione.
 
 ---
 
-## Sidebar
+# Layout
+
+Layout principale:
+
+```text
+resources/views/components/layout.blade.php
+```
+
+Props supportate:
+
+```php
+dashboard
+fullHeight
+hideSubscription
+```
+
+Quando:
+
+```php
+dashboard = true
+```
+
+viene caricata automaticamente la sidebar associata al ruolo autenticato.
+
+---
+
+# Sidebar
 
 Sono presenti sidebar dedicate per:
 
@@ -123,42 +189,67 @@ Sono presenti sidebar dedicate per:
 Funzionalità:
 
 * apertura/chiusura
-* apertura hover
+* hover expand
 * apertura persistente
-* dropdown
-* supporto mobile
-* overlay
+* dropdown interni
+* overlay mobile
+* responsive navigation
 * chiusura tramite ESC
+* click esterno
 * selettore lingua
 * profilo utente
 
----
+File principali:
 
-## Widget Architecture
+```text
+resources/css/dashboard-sidebar.css
 
-### Admin
-
-* components
-* widgets
-* partials
-
-### Trainer
-
-* components
-* widgets
-* partials
-
-### Customer
-
-* components
-* widgets
-* partials
+resources/js/dashboard-sidebar.js
+```
 
 ---
 
-## Dashboard Admin
+# Widget Architecture
 
-### Header Dashboard
+Ogni dashboard utilizza una struttura dedicata.
+
+## Admin
+
+```text
+components
+widgets
+partials
+```
+
+## Trainer
+
+```text
+components
+widgets
+partials
+```
+
+## Customer
+
+```text
+components
+widgets
+partials
+```
+
+Obiettivo:
+
+permettere l'aggiunta di nuovi widget senza modificare il layout principale.
+
+---
+
+# Dashboard Admin
+
+La Dashboard Admin rappresenta il centro operativo principale della piattaforma.
+
+---
+
+## Dashboard Header
 
 Comprende:
 
@@ -168,43 +259,136 @@ Comprende:
 
 ---
 
-### Stats Cards
+## Stats Cards
 
-Widget KPI iniziale.
+Widget KPI principale.
 
-Comprende:
+Attualmente visualizza:
 
-* utenti
+* utenti registrati
 * clienti attivi
 * trainer
-* lezioni
-* prenotazioni
-* incassi
+* lezioni programmate
+* prenotazioni giornaliere
+* incasso mensile
 
-Attualmente utilizza dati placeholder.
+Le statistiche vengono recuperate in tempo reale dal database.
 
 ---
 
-### Quick Actions
+### Utenti
 
-Widget per le operazioni rapide amministrative.
+Mostra il numero totale di utenti registrati.
+
+Comprende:
+
+* customer attivi
+* customer inattivi
+* utenti registrati
+
+Esclude:
+
+* amministratori
+* trainer
+
+---
+
+### Clienti Attivi
+
+Mostra il numero di clienti attivi.
+
+Requisiti:
+
+* ruolo customer
+* stato attivo
+
+---
+
+### Trainer
+
+Mostra il numero totale dei trainer presenti nel sistema.
+
+---
+
+### Lezioni Programmate
+
+Mostra il numero totale delle lezioni future.
+
+Include:
+
+* lezioni schedulate
+* lezioni prenotabili
+
+Esclude:
+
+* lezioni concluse
+* lezioni cancellate
+
+---
+
+### Prenotazioni Giornaliere
+
+Mostra il numero di prenotazioni effettuate nella giornata corrente.
+
+Supporta:
+
+* confronto con il giorno precedente
+* variazione percentuale
+* trend positivo
+* trend neutro
+* trend negativo
+
+---
+
+### Incasso Mensile
+
+Mostra il fatturato generato nel mese corrente.
+
+Comprende:
+
+* iscrizioni
+* abbonamenti
+* lezioni singole
+* servizi
+* pacchetti ingressi
+* assicurazioni acquistate separatamente
+
+Esclude:
+
+* assicurazioni già incluse nelle iscrizioni
+* assicurazioni già incluse negli abbonamenti
+
+per evitare doppi conteggi.
+
+Supporta:
+
+* confronto con il mese precedente
+* trend percentuale
+* gestione mesi senza ricavi
+
+---
+
+## Quick Actions
+
+Widget dedicato alle operazioni rapide.
 
 Obiettivi:
 
 * ridurre il numero di click
-* centralizzare le operazioni più frequenti
+* velocizzare il lavoro amministrativo
+* centralizzare le operazioni frequenti
 
 ---
 
-### Latest Users
+## Latest Users
 
 Widget dedicato agli ultimi iscritti.
 
 Informazioni mostrate:
 
 * nome
-* assicurazione
-* abbonamento
+* stato assicurazione
+* stato abbonamento
 * stato generale
 
 Logica assicurazione:
@@ -219,34 +403,37 @@ Logica abbonamento:
 * Giallo → in scadenza
 * Rosso → assente, scaduto o cancellato
 
-L'assicurazione rappresenta sempre il controllo prioritario.
+L'assicurazione rappresenta il controllo prioritario.
 
 ---
 
-### Next Lessons
+## Next Lessons
 
-Nuovo widget dedicato alle prossime lezioni programmate.
+Widget dedicato alle prossime lezioni.
 
 File:
 
-* resources/views/dashboard/admin/widgets/next-lessons.blade.php
+```text
+resources/views/dashboard/admin/widgets/next-lessons.blade.php
+```
 
-Dati visualizzati:
+Visualizza:
 
-* data lezione
+* data
 * orario
 * trainer
 * prenotazioni
-* stato occupazione
+* occupazione
 
 Funzionalità:
 
 * recupero automatico delle prossime 5 lezioni
-* esclusione delle lezioni già iniziate
+* esclusione lezioni già iniziate
 * ordinamento cronologico
-* caricamento relazioni trainer e prenotazioni
+* eager loading trainer
+* eager loading prenotazioni
 * badge dinamici
-* barra occupazione posti
+* progress bar occupazione
 * supporto localizzazione
 
 Stati:
@@ -257,15 +444,86 @@ Stati:
 
 ---
 
-## Lesson Recurrence Architecture
+# KPI Architecture
 
-### LessonTemplate
+I KPI amministrativi vengono generati tramite:
+
+```php
+App\Services\Dashboard\AdminDashboardService
+```
+
+Responsabilità:
+
+* aggregazione dati
+* statistiche dashboard
+* trend giornalieri
+* trend mensili
+* revenue analytics
+* recupero lezioni
+* preparazione widget
+
+Le Blade non contengono logica business.
+
+Tutta la logica è centralizzata nel Service Layer.
+
+---
+
+# Revenue Architecture
+
+Per consentire KPI economici affidabili è stato introdotto un sistema di tracciamento dell'origine dei pagamenti assicurativi.
+
+Campo:
+
+```text
+insurance_policies.payment_source
+```
+
+Valori supportati:
+
+```text
+standalone
+registration
+subscription
+```
+
+---
+
+## Obiettivo
+
+Distinguere:
+
+* assicurazioni acquistate separatamente
+* assicurazioni incluse nell'iscrizione
+* assicurazioni incluse negli abbonamenti
+
+---
+
+## Benefici
+
+Permette di:
+
+* evitare doppie contabilizzazioni
+* generare KPI affidabili
+* costruire statistiche economiche corrette
+* supportare future integrazioni con gateway di pagamento
+
+---
+
+# Lesson Recurrence Architecture
+
+Per supportare la programmazione ricorrente è stata introdotta una struttura basata su Template.
+
+---
+
+## LessonTemplate
 
 Tabella:
 
-* lesson_templates
+```text
+lesson_templates
+```
 
-Rappresenta le regole ricorrenti delle lezioni.
+Rappresenta la regola ricorrente.
 
 Contiene:
 
@@ -278,15 +536,19 @@ Contiene:
 
 Model:
 
-* App\Models\Lesson\LessonTemplate
+```php
+App\Models\Lesson\LessonTemplate
+```
 
 ---
 
-### Lesson
+## Lesson
 
 Tabella:
 
-* lessons
+```text
+lessons
+```
 
 Rappresenta la singola lezione reale.
 
@@ -296,29 +558,29 @@ Può essere:
 * spostata
 * annullata
 
-senza alterare il template.
+senza modificare il template originale.
 
 Model:
 
-* App\Models\Lesson\Lesson
+```php
+App\Models\Lesson\Lesson
+```
 
 ---
 
-### Relazioni
+## Relazioni
 
+```text
 LessonTemplate
-
 ↓
-
 Lesson
-
 ↓
-
 Booking
+```
 
 ---
 
-### Generazione Automatica
+# Generazione Automatica Lezioni
 
 Comando:
 
@@ -326,7 +588,7 @@ Comando:
 php artisan gym:generate-lessons
 ```
 
-Supporta:
+Opzioni:
 
 ```bash
 php artisan gym:generate-lessons --weeks=8
@@ -341,7 +603,7 @@ Funzionalità:
 
 ---
 
-### Scheduler
+# Scheduler
 
 Laravel Scheduler esegue automaticamente:
 
@@ -349,21 +611,25 @@ Laravel Scheduler esegue automaticamente:
 php artisan gym:generate-lessons
 ```
 
-Configurazione attuale:
+Configurazione:
 
-* ogni lunedì alle 02:00
+```text
+ogni lunedì alle 02:00
+```
+
+Obiettivo:
+
+mantenere sempre disponibili lezioni future prenotabili.
 
 ---
 
-## Timezone Management
+# Timezone Management
 
-Il progetto utilizza:
+Configurazione:
 
 ```env
 APP_TIMEZONE=Europe/Rome
 ```
-
-Configurazione:
 
 ```php
 'timezone' => env('APP_TIMEZONE', 'UTC')
@@ -371,84 +637,137 @@ Configurazione:
 
 Motivazione:
 
-Tutta la logica della palestra dipende dal fuso orario locale:
+l'intera logica della palestra dipende dal fuso orario locale.
 
-* lezioni future
-* lezioni passate
+Coinvolge:
+
+* lezioni
 * prenotazioni
 * assicurazioni
 * abbonamenti
 * scheduler
+* KPI giornalieri
 
 ---
 
-## Localizzazione
+# Localizzazione
 
-Sono stati introdotti file lingua dedicati ai widget lezioni:
+Lingue attualmente supportate:
 
-* lang/it/lesson.php
-* lang/en/lesson.php
+* Italiano
+* Inglese
+
+File dedicati:
+
+```text
+lang/it/lesson.php
+lang/en/lesson.php
+
+lang/it/kpi.php
+lang/en/kpi.php
+```
 
 Supportano:
 
+* widget dashboard
+* KPI
 * badge lezioni
-* stati occupazione
-* prenotazioni
-* etichette widget
+* occupazione lezioni
+* trend dashboard
+* etichette statistiche
 
 ---
 
-## CSS
+# CSS Architecture
 
-Moduli principali:
+Moduli attualmente presenti:
 
-* variables.css
-* utilities.css
-* navbar.css
-* public.css
-* forms.css
-* footer.css
-* dashboard-sidebar.css
-* dashboard-widgets.css
+```text
+variables.css
+utilities.css
+navbar.css
+public.css
+forms.css
+footer.css
+dashboard-sidebar.css
+dashboard-widgets.css
+```
 
----
+Obiettivo:
 
-## Git Conventions
-
-Tipologie utilizzate:
-
-* feat:
-* fix:
-* refactor:
-* docs:
+mantenere separata la logica stilistica delle varie aree dell'applicazione.
 
 ---
 
-## Milestones
+# Git Convention
 
-* refactor: build dashboard architecture and role-based sidebar navigation
-* feat: add admin dashboard widgets and mobile sidebar support
-* feat: implement admin dashboard widgets and recurring lesson architecture
-* feat: add next lessons widget and admin dashboard service
+Tipologie di commit utilizzate:
+
+```text
+feat:
+fix:
+refactor:
+docs:
+```
+
+Documentazione e codice devono rimanere sincronizzati ad ogni milestone significativa.
 
 ---
 
-## Roadmap Immediata
+# Milestones Completate
 
-Dashboard Admin:
+```text
+refactor: build dashboard architecture and role-based sidebar navigation
 
-* KPI reali da database
-* grafici dashboard
+feat: add admin dashboard widgets and mobile sidebar support
+
+feat: implement admin dashboard widgets and recurring lesson architecture
+
+feat: add next lessons widget and admin dashboard service
+
+feat: implement admin dashboard KPIs and revenue analytics
+```
+
+---
+
+# Roadmap
+
+## Dashboard Admin
+
+* grafici KPI
+* revenue chart
+* bookings chart
 * attività recenti
 * scadenze assicurazioni
 * scadenze abbonamenti
-* gestione utenti
+* topbar dashboard
+* saluti dinamici
 
-Successivamente:
+---
 
-* Dashboard Trainer
-* Dashboard Customer
-* traduzione contenuti gestionali
-* prenotazioni avanzate
-* pagamenti
+## Dashboard Trainer
+
+* KPI trainer
+* lezioni assegnate
+* prenotazioni
+* disponibilità
+
+---
+
+## Dashboard Customer
+
+* abbonamenti
+* assicurazione
+* prenotazioni
+* storico attività
+
+---
+
+## Evoluzioni Future
+
+* sistema pagamenti completo
+* rinnovi automatici
 * gestione ingressi
+* notifiche
+* analytics avanzate
+* contenuti gestionali multilingua

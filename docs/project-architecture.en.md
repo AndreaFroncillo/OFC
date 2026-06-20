@@ -1,118 +1,186 @@
 # Olimpia Club House - Project Architecture
 
-## Current Status
+## Overview
 
-The project is structured as a gym management platform with a clear separation between:
+Olimpia Club House is a gym and fitness center management platform built with Laravel.
+
+The goal of the project is to provide a complete ecosystem for managing:
+
+* users
+* trainers
+* lessons
+* bookings
+* subscriptions
+* sports insurance policies
+* additional services
+* single entries
+* entry packages
+* management dashboards
+
+The architecture is designed to be modular, scalable, and maintainable.
+
+---
+
+# Application Structure
+
+The application is divided into five main areas:
 
 * public website
-* dashboard area
+* dashboard
 * admin area
 * trainer area
 * customer area
 
+This separation allows independent management of:
+
+* public navigation
+* business logic
+* permissions
+* role-specific interfaces
+
 ---
 
-## Main Roles
+# Roles
 
-Supported roles:
+The system currently supports three main roles:
 
 * admin
 * trainer
 * customer
 
-Users belong to a role through:
+Each user belongs to a role through:
 
-* users.role_id
+```text
+users.role_id
+```
 
-Helper methods:
+Available helpers:
 
-* isAdmin()
-* isTrainer()
-* isCustomer()
+```php
+$user->isAdmin();
 
----
+$user->isTrainer();
 
-## Dashboard
-
-A single DashboardController handles dashboard routing.
-
-Views:
-
-* resources/views/dashboard/admin/admin.blade.php
-* resources/views/dashboard/trainer/trainer.blade.php
-* resources/views/dashboard/customer/customer.blade.php
+$user->isCustomer();
+```
 
 ---
 
-## Dashboard Service Layer
+# Dashboard Routing
 
-A dedicated dashboard service layer has been introduced.
+Dashboard navigation is centralized inside:
 
-Current services:
+```php
+App\Http\Controllers\Dashboard\DashboardController
+```
 
-* App\Services\Dashboard\AdminDashboardService
+The controller automatically determines the authenticated user's role and loads the correct dashboard.
+
+Available dashboards:
+
+```text
+resources/views/dashboard/admin/admin.blade.php
+
+resources/views/dashboard/trainer/trainer.blade.php
+
+resources/views/dashboard/customer/customer.blade.php
+```
+
+---
+
+# Dashboard Architecture
+
+To prevent controllers from becoming overloaded, a dedicated Service Layer has been introduced.
+
+Currently available:
+
+```php
+App\Services\Dashboard\AdminDashboardService
+```
 
 Responsibilities:
 
 * dashboard data retrieval
-* widget data preparation
-* model transformation
-* dashboard business logic centralization
+* KPI generation
+* revenue analytics
+* upcoming lessons retrieval
+* data transformation
+* widget preparation
+* trend calculations
 
 Goals:
 
 * lightweight controllers
-* maintainability
-* scalability
+* separation of concerns
+* easier maintenance
+* future test coverage
 
 ---
 
-## Dashboard Data Mapping Layer
+# Dashboard Data Mapping Layer
 
-Dashboard data is prepared using Collection Mapping.
+Views never receive raw models directly.
+
+Data transformation is performed through Collection Mapping.
 
 Flow:
 
-Lesson Model
-
+```text
+Model
 ↓
-
-Dashboard Mapping
-
+Dashboard Service
 ↓
+Mapping
+↓
+Blade Ready Array
+↓
+View
+```
 
-Blade-ready Array
-
-Responsibilities:
+The mapping layer handles:
 
 * date formatting
 * time formatting
-* percentage calculations
+* localization
 * dynamic badges
+* progress bars
+* lesson occupancy
 * trainer information
-* lesson occupancy data
+* KPI trends
 
 Views receive only presentation-ready data.
 
 ---
 
-## Layout
+# Layout
 
-Shared layout:
+Main layout:
 
-* resources/views/components/layout.blade.php
+```text
+resources/views/components/layout.blade.php
+```
 
-Props:
+Supported props:
 
-* dashboard
-* fullHeight
-* hideSubscription
+```php
+dashboard
+fullHeight
+hideSubscription
+```
+
+When:
+
+```php
+dashboard = true
+```
+
+the sidebar corresponding to the authenticated user's role is automatically loaded.
 
 ---
 
-## Sidebar
+# Sidebar
 
-Dedicated sidebars for:
+Dedicated sidebars exist for:
 
 * Admin
 * Trainer
@@ -120,43 +188,68 @@ Dedicated sidebars for:
 
 Features:
 
-* toggle open/close
+* open/close toggle
 * hover expansion
-* persistent mode
-* dropdown menus
-* mobile support
-* overlay
+* persistent expansion
+* nested dropdowns
+* mobile overlay
+* responsive navigation
 * ESC close
+* outside click close
 * language selector
 * user profile section
 
----
+Main files:
 
-## Widget Architecture
+```text
+resources/css/dashboard-sidebar.css
 
-### Admin
-
-* components
-* widgets
-* partials
-
-### Trainer
-
-* components
-* widgets
-* partials
-
-### Customer
-
-* components
-* widgets
-* partials
+resources/js/dashboard-sidebar.js
+```
 
 ---
 
-## Admin Dashboard
+# Widget Architecture
 
-### Dashboard Header
+Each dashboard uses a dedicated widget structure.
+
+## Admin
+
+```text
+components
+widgets
+partials
+```
+
+## Trainer
+
+```text
+components
+widgets
+partials
+```
+
+## Customer
+
+```text
+components
+widgets
+partials
+```
+
+Goal:
+
+Allow new widgets to be added without modifying the main dashboard layout.
+
+---
+
+# Admin Dashboard
+
+The Admin Dashboard is the main operational hub of the platform.
+
+---
+
+## Dashboard Header
 
 Includes:
 
@@ -166,48 +259,141 @@ Includes:
 
 ---
 
-### Stats Cards
+## Stats Cards
 
-Initial KPI widget.
+Main KPI widget.
 
-Includes:
+Currently displays:
 
-* users
-* active customers
+* registered users
+* active members
 * trainers
-* lessons
-* bookings
-* revenue
+* scheduled lessons
+* daily bookings
+* monthly revenue
 
-Currently uses placeholder data.
+All statistics are retrieved in real time from the database.
 
 ---
 
-### Quick Actions
+### Users
 
-Administrative quick actions widget.
+Displays the total number of registered users.
+
+Includes:
+
+* active customers
+* inactive customers
+* registered users
+
+Excludes:
+
+* administrators
+* trainers
+
+---
+
+### Active Members
+
+Displays the number of active customers.
+
+Requirements:
+
+* customer role
+* active status
+
+---
+
+### Trainers
+
+Displays the total number of trainers in the system.
+
+---
+
+### Scheduled Lessons
+
+Displays the total number of future scheduled lessons.
+
+Includes:
+
+* scheduled lessons
+* bookable lessons
+
+Excludes:
+
+* completed lessons
+* cancelled lessons
+
+---
+
+### Daily Bookings
+
+Displays the number of bookings created during the current day.
+
+Supports:
+
+* comparison with the previous day
+* percentage variation
+* positive trend
+* neutral trend
+* negative trend
+
+---
+
+### Monthly Revenue
+
+Displays the revenue generated during the current month.
+
+Includes:
+
+* registrations
+* subscriptions
+* single lesson bookings
+* service bookings
+* entry packages
+* standalone insurance purchases
+
+Excludes:
+
+* insurance already included in registrations
+* insurance already included in subscriptions
+
+to avoid double counting.
+
+Supports:
+
+* comparison with the previous month
+* percentage trend
+* zero-revenue month handling
+
+---
+
+## Quick Actions
+
+Widget dedicated to administrative shortcuts.
 
 Goals:
 
 * reduce navigation time
-* centralize common operations
+* speed up administrative workflows
+* centralize common actions
 
 ---
 
-### Latest Users
+## Latest Users
 
-Widget displaying recent members.
+Widget displaying recently registered members.
 
 Displays:
 
 * name
-* insurance
-* subscription
+* insurance status
+* subscription status
 * overall status
 
 Insurance logic:
 
-* Green → more than 60 days
+* Green → more than 60 days remaining
 * Yellow → expires within 60 days
 * Red → missing or expired
 
@@ -215,34 +401,37 @@ Subscription logic:
 
 * Green → active
 * Yellow → close to expiration
-* Red → missing, expired or cancelled
+* Red → missing, expired, or cancelled
 
 Insurance status always has priority.
 
 ---
 
-### Next Lessons
+## Next Lessons
 
-New widget displaying upcoming scheduled lessons.
+Widget displaying upcoming lessons.
 
 File:
 
-* resources/views/dashboard/admin/widgets/next-lessons.blade.php
+```text
+resources/views/dashboard/admin/widgets/next-lessons.blade.php
+```
 
 Displays:
 
-* lesson date
-* lesson time
+* date
+* time
 * trainer
 * bookings
-* occupancy status
+* occupancy
 
 Features:
 
-* automatic retrieval of next 5 lessons
-* excludes already started lessons
+* automatic retrieval of the next 5 lessons
+* exclusion of already started lessons
 * chronological ordering
-* eager loading of trainer and bookings
+* trainer eager loading
+* booking eager loading
 * dynamic badges
 * occupancy progress bar
 * localization support
@@ -255,15 +444,86 @@ Statuses:
 
 ---
 
-## Lesson Recurrence Architecture
+# KPI Architecture
 
-### LessonTemplate
+Administrative KPIs are generated through:
+
+```php
+App\Services\Dashboard\AdminDashboardService
+```
+
+Responsibilities:
+
+* data aggregation
+* dashboard statistics
+* daily trends
+* monthly trends
+* revenue analytics
+* lesson retrieval
+* widget preparation
+
+Views contain no business logic.
+
+All business rules are centralized inside the Service Layer.
+
+---
+
+# Revenue Architecture
+
+To support reliable financial KPIs, insurance payment source tracking has been introduced.
+
+Field:
+
+```text
+insurance_policies.payment_source
+```
+
+Supported values:
+
+```text
+standalone
+registration
+subscription
+```
+
+---
+
+## Goal
+
+Differentiate between:
+
+* standalone insurance purchases
+* insurance included in registrations
+* insurance included in subscriptions
+
+---
+
+## Benefits
+
+Allows:
+
+* preventing double counting
+* generating accurate KPIs
+* building reliable revenue analytics
+* supporting future payment gateway integrations
+
+---
+
+# Lesson Recurrence Architecture
+
+To support recurring lesson scheduling, a Template-based architecture has been introduced.
+
+---
+
+## LessonTemplate
 
 Table:
 
-* lesson_templates
+```text
+lesson_templates
+```
 
-Represents recurring lesson rules.
+Represents the recurring lesson rule.
 
 Contains:
 
@@ -276,17 +536,21 @@ Contains:
 
 Model:
 
-* App\Models\Lesson\LessonTemplate
+```php
+App\Models\Lesson\LessonTemplate
+```
 
 ---
 
-### Lesson
+## Lesson
 
 Table:
 
-* lessons
+```text
+lessons
+```
 
-Represents real calendar occurrences.
+Represents the actual lesson occurrence.
 
 Can be:
 
@@ -298,25 +562,25 @@ without affecting the original template.
 
 Model:
 
-* App\Models\Lesson\Lesson
+```php
+App\Models\Lesson\Lesson
+```
 
 ---
 
-### Relationships
+## Relationships
 
+```text
 LessonTemplate
-
 ↓
-
 Lesson
-
 ↓
-
 Booking
+```
 
 ---
 
-### Automatic Generation
+# Automatic Lesson Generation
 
 Command:
 
@@ -324,7 +588,7 @@ Command:
 php artisan gym:generate-lessons
 ```
 
-Supports:
+Options:
 
 ```bash
 php artisan gym:generate-lessons --weeks=8
@@ -333,13 +597,13 @@ php artisan gym:generate-lessons --weeks=8
 Features:
 
 * multi-week generation
-* duplicate prevention
 * existing lesson updates
+* duplicate prevention
 * past lesson exclusion
 
 ---
 
-### Scheduler
+# Scheduler
 
 Laravel Scheduler automatically executes:
 
@@ -347,21 +611,25 @@ Laravel Scheduler automatically executes:
 php artisan gym:generate-lessons
 ```
 
-Current configuration:
+Configuration:
 
-* every Monday at 02:00
+```text
+Every Monday at 02:00
+```
+
+Goal:
+
+Always keep future bookable lessons available.
 
 ---
 
-## Timezone Management
+# Timezone Management
 
-The project uses:
+Configuration:
 
 ```env
 APP_TIMEZONE=Europe/Rome
 ```
-
-Configuration:
 
 ```php
 'timezone' => env('APP_TIMEZONE', 'UTC')
@@ -369,84 +637,137 @@ Configuration:
 
 Reason:
 
-All gym business logic depends on local time:
+The entire gym business logic depends on local time.
 
-* future lessons
-* past lessons
+Impacts:
+
+* lessons
 * bookings
 * insurance policies
 * subscriptions
 * scheduler
+* daily KPIs
 
 ---
 
-## Localization
+# Localization
 
-Dedicated lesson language files introduced:
+Currently supported languages:
 
-* lang/it/lesson.php
-* lang/en/lesson.php
+* Italian
+* English
+
+Dedicated files:
+
+```text
+lang/it/lesson.php
+lang/en/lesson.php
+
+lang/it/kpi.php
+lang/en/kpi.php
+```
 
 Supports:
 
+* dashboard widgets
+* KPIs
 * lesson badges
-* occupancy states
-* booking labels
-* widget labels
+* lesson occupancy
+* dashboard trends
+* statistical labels
 
 ---
 
-## CSS Architecture
+# CSS Architecture
 
-Main modules:
+Current modules:
 
-* variables.css
-* utilities.css
-* navbar.css
-* public.css
-* forms.css
-* footer.css
-* dashboard-sidebar.css
-* dashboard-widgets.css
+```text
+variables.css
+utilities.css
+navbar.css
+public.css
+forms.css
+footer.css
+dashboard-sidebar.css
+dashboard-widgets.css
+```
 
----
+Goal:
 
-## Git Conventions
-
-Supported prefixes:
-
-* feat:
-* fix:
-* refactor:
-* docs:
+Keep visual responsibilities separated across application areas.
 
 ---
 
-## Milestones
+# Git Convention
 
-* refactor: build dashboard architecture and role-based sidebar navigation
-* feat: add admin dashboard widgets and mobile sidebar support
-* feat: implement admin dashboard widgets and recurring lesson architecture
-* feat: add next lessons widget and admin dashboard service
+Supported commit types:
+
+```text
+feat:
+fix:
+refactor:
+docs:
+```
+
+Documentation and source code must remain synchronized after every significant milestone.
 
 ---
 
-## Immediate Roadmap
+# Completed Milestones
 
-Admin Dashboard:
+```text
+refactor: build dashboard architecture and role-based sidebar navigation
 
-* real database KPIs
-* dashboard charts
+feat: add admin dashboard widgets and mobile sidebar support
+
+feat: implement admin dashboard widgets and recurring lesson architecture
+
+feat: add next lessons widget and admin dashboard service
+
+feat: implement admin dashboard KPIs and revenue analytics
+```
+
+---
+
+# Roadmap
+
+## Admin Dashboard
+
+* KPI charts
+* revenue chart
+* bookings chart
 * recent activities
 * insurance expirations
 * subscription expirations
-* member management
+* dashboard topbar
+* dynamic greetings
 
-Future modules:
+---
 
-* Trainer Dashboard
-* Customer Dashboard
-* management content localization
-* advanced bookings
-* payments
+## Trainer Dashboard
+
+* trainer KPIs
+* assigned lessons
+* bookings
+* availability management
+
+---
+
+## Customer Dashboard
+
+* subscriptions
+* insurance status
+* bookings
+* activity history
+
+---
+
+## Future Evolutions
+
+* complete payment system
+* automatic renewals
 * entry management
+* notifications
+* advanced analytics
+* multilingual management content
