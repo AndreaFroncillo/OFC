@@ -41,4 +41,5 @@
 
 /* Dashboard */
 @import './dashboard-sidebar.css';
+@import './dashboard-topbar.css';
 @import './dashboard-widgets.css';

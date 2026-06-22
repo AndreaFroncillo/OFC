@@ -98,24 +98,4 @@
 
         <x-partials.flags_dropdown />
     </nav>
-
-    <div class="dashboard-sidebar-footer">
-        <div class="dashboard-sidebar-group">
-            <button class="dashboard-sidebar-link dashboard-sidebar-dropdown-toggle" type="button">
-                <i class="fas fa-user-circle"></i>
-                <span>{{ __('auth.hello') }} {{ Auth::user()->name }}</span>
-                <i class="fas fa-chevron-down dropdown-chevron"></i>
-            </button>
-            <div class="dashboard-sidebar-submenu">
-                <a href="{{ route('homepage') }}">{{ __('auth.go_home') }}</a>
-                <a href="#">{{ __('auth.profile') }}</a>
-                <a href="#" onclick="event.preventDefault(); document.querySelector('#dashboard-form-logout').submit();">
-                    {{ __('auth.logout') }}
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="d-none" id="dashboard-form-logout">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    </div>
 </aside>

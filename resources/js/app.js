@@ -1,9 +1,8 @@
-console.log('APP JS LOADED');
-
 import './bootstrap';
 import './script';
-import './flags-prefix/flags-prefix'
+import './flags-prefix/flags-prefix';
 import './dashboard-sidebar';
+import './dashboard-topbar';
 import 'bootstrap';
 
 
