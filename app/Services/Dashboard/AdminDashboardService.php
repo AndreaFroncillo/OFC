@@ -13,10 +13,11 @@ use App\Models\Trainer\Trainer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class AdminDashboardService
 {
-    public function getNextLessons()
+    public function getNextLessons(): Collection
     {
         return Lesson::upcoming()
             ->scheduled()
@@ -105,6 +106,65 @@ class AdminDashboardService
                 rawValue: $currentMonthRevenue
             ),
         ];
+    }
+
+    public function getRevenueChartData(): array
+    {
+        return collect(range(0, 11))
+            ->reverse()
+            ->map(function (int $monthsAgo) {
+                $month = now()->subMonths($monthsAgo);
+
+                return [
+                    'label' => $month->translatedFormat('M Y'),
+                    'revenue' => $this->getRevenueForMonth($month),
+                ];
+            })
+            ->values()
+            ->toArray();
+    }
+
+    public function getLatestUsers(): Collection
+    {
+        return $this->usersWithRole('customer')
+            ->with([
+                'activeSubscription.subscriptionPlan',
+                'activeInsurancePolicy',
+            ])
+            ->latest()
+            ->take(5)
+            ->get()
+            ->map(function (User $user) {
+                $subscription = $user->activeSubscription;
+                $insurance = $user->activeInsurancePolicy;
+
+                return [
+                    'model' => $user,
+                    'name' => trim($user->name . ' ' . ($user->surname ?? '')),
+                    'initials' => strtoupper(substr($user->name, 0, 1) . substr($user->surname ?? '', 0, 1)),
+                    'mail' => $user->email,
+                    'role' => trans_choice('auth.customer', 1),
+
+                    'plan' => $subscription?->subscriptionPlan?->name ?? __('general.not_available'),
+                    'insurance' => $insurance?->policy_number ?? __('general.not_available'),
+
+                    'planBadgeClass' => $subscription
+                        ? 'dashboard-badge-success'
+                        : 'dashboard-badge-danger',
+
+                    'planBadgeText' => $subscription
+                        ? __('general.active_plan')
+                        : __('general.no_active_plan'),
+
+                    'insuranceBadgeClass' => $insurance
+                        ? 'dashboard-badge-success'
+                        : 'dashboard-badge-danger',
+
+                    'insuranceBadgeText' => $insurance
+                        ? __('general.active_insurance')
+                        : __('general.no_active_insurance'),
+                ];
+            });
     }
 
     private function getTotalUsers(): int
@@ -282,7 +342,7 @@ class AdminDashboardService
     {
         return trim(
             ($lesson->trainer?->user?->name ?? '') . ' ' .
-            ($lesson->trainer?->user?->surname ?? '')
+                ($lesson->trainer?->user?->surname ?? '')
         ) ?: __('general.not_available');
     }
 

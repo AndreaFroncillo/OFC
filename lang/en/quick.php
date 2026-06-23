@@ -5,6 +5,7 @@ return [
     'handling' => 'Expedited Handling',
     'log_payment' => 'Log Payment',
     'manage_classes' => 'Manage Classes',
+    'manage_users' => 'Manage users',
     'new_class' => 'Add Class',
     'new_service' => 'Add Service',
     'new_subscription' => 'Add Subscription',

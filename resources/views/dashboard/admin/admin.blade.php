@@ -63,11 +63,17 @@
         </div>
 
         <x-admin::stats-cards :statsCards="$statsCards" />
+        <x-admin::revenue-chart :revenueChartData="$revenueChartData" />
 
         <div class="dashboard-grid">
-            <x-admin::quick-actions />
-            <x-admin::latest-users />
-            <x-admin::next-lessons :nextLessons="$nextLessons" />
+            <div class="dashboard-column">
+                <x-admin::quick-actions />
+                <x-admin::next-lessons :nextLessons="$nextLessons" />
+            </div>
+
+            <div class="dashboard-column">
+                <x-admin::latest-users :latestUsers="$latestUsers" />
+            </div>
         </div>
     </section>
 </x-layout>

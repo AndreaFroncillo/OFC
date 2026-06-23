@@ -2,6 +2,7 @@
 
 return [
     'address' => 'Email address',
+    'email' => 'Email',
     'sign_up_newsletter' => 'Sign up for our newsletter',
     'subscribe' => 'Subscribe',
 ];

@@ -7,6 +7,7 @@ return [
     'live' => 'Live',
     'members' => 'Members',
     'revenue' => 'Monthly Revenue',
+    'revenue_overview' => 'Revenue overview',
     'scheduled_classes' => 'Scheduled Classes',
     'trainers' => 'Trainers',
     'updated_now' => 'Updated now',

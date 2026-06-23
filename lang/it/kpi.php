@@ -7,6 +7,7 @@ return [
     'live' => 'Live',
     'members' => 'Clienti Attivi',
     'revenue' => 'Incasso Del Mese',
+    'revenue_overview' => 'Andamento incassi',
     'scheduled_classes' => 'Lezioni Programmate',
     'trainers' => 'Trainer',
     'updated_now' => 'Aggiornato ora',

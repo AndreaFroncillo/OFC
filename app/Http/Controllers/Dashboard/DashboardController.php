@@ -17,8 +17,15 @@ class DashboardController extends Controller
 
             $nextLessons = $adminDashboardService->getNextLessons();
             $statsCards = $adminDashboardService->getStatsCards();
+            $revenueChartData = $adminDashboardService->getRevenueChartData();
+            $latestUsers = $adminDashboardService->getLatestUsers();
 
-            return view('dashboard.admin.admin', compact('nextLessons', 'statsCards'));
+            return view('dashboard.admin.admin', 
+            compact(
+                'nextLessons', 
+                'statsCards', 
+                'revenueChartData', 
+                'latestUsers'));
         }
 
         // 2. Controllo Trainer
