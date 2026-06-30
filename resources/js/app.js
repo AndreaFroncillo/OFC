@@ -1,9 +1,18 @@
 import './bootstrap';
+
+// Global
 import './script';
-import './flags-prefix/flags-prefix';
+
+// Forms
+import './forms/phone-input';
+import './forms/prevent-double-submit';
+
+// Dashboard
 import './dashboard-sidebar';
 import './dashboard-topbar';
 import './dashboard-revenue-chart';
+
+// Bootstrap
 import 'bootstrap';
 
 

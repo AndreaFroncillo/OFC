@@ -1,0 +1,51 @@
+/* Phone Input */
+.management-user-card,
+.management-detail-card {
+    overflow: visible;
+}
+
+.management-form-grid,
+.management-form-grid-inner,
+.management-form-group {
+    overflow: visible;
+}
+
+.iti {
+    width: 100%;
+}
+
+.iti__tel-input {
+    padding-left: 5.5rem;
+}
+
+.iti__dropdown-content {
+    z-index: 9999;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 0, 110, 0.12);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+}
+
+.iti__search-input {
+    width: calc(100% - 1rem);
+    min-height: 46px;
+    margin: 0.5rem;
+    padding: 0.75rem 1rem 0.75rem 2.25rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 0, 110, 0.12);
+    outline: none;
+    font-weight: 700;
+}
+
+.iti__search-input:focus {
+    border-color: rgba(255, 0, 110, 0.35);
+    box-shadow: 0 0 0 4px rgba(255, 0, 110, 0.08);
+}
+
+.iti__country-list {
+    max-height: 240px;
+}
+
+.iti--container {
+    z-index: 10000;
+}

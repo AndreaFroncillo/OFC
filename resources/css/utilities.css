@@ -44,6 +44,10 @@
     color: var(--p);
 }
 
+.text-primary-color {
+    color: var(--primary-color);
+}
+
 .text-v {
     color: var(--v);
 }

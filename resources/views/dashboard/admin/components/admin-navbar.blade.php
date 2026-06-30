@@ -23,7 +23,7 @@
                 <i class="fas fa-chevron-down dropdown-chevron"></i>
             </button>
             <div class="dashboard-sidebar-submenu">
-                <a href="#">{{ __('auth.all_users') }}</a>
+                <a href="{{route('users.index')}}">{{ __('auth.all_users') }}</a>
                 <a href="#">{{ trans_choice('auth.customer', 2) }}</a>
                 <a href="#">{{ trans_choice('general.trainer', 2) }}</a>
             </div>

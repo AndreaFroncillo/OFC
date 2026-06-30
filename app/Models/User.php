@@ -56,6 +56,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
         ];
     }
 
@@ -64,6 +65,13 @@ class User extends Authenticatable
     public const STATUS_SUSPENDED = 'suspended';
     public const STATUS_EXPIRED = 'expired';
     public const STATUS_BANNED = 'banned';
+
+
+    /* Route Key Name */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     /*
     protected static function booted()
@@ -207,5 +215,59 @@ class User extends Authenticatable
     public function hasRole(string $slug): bool
     {
         return $this->role?->slug === $slug;
+    }
+
+    public function hasPermission(string $permissionSlug): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        return $this->role
+            ?->permissions()
+            ->where('slug', $permissionSlug)
+            ->exists() ?? false;
+    }
+
+    public function hasAnyPermission(array $permissionSlugs): bool
+    {
+        foreach ($permissionSlugs as $permissionSlug) {
+            if ($this->hasPermission($permissionSlug)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasAllPermissions(array $permissionSlugs): bool
+    {
+        foreach ($permissionSlugs as $permissionSlug) {
+            if (! $this->hasPermission($permissionSlug)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getStatusBadgeClassAttribute(): string
+    {
+        return match ($this->status) {
+            self::STATUS_ACTIVE => 'dashboard-badge-success',
+
+            self::STATUS_REGISTERED,
+            self::STATUS_SUSPENDED => 'dashboard-badge-warning',
+
+            self::STATUS_EXPIRED,
+            self::STATUS_BANNED => 'dashboard-badge-danger',
+
+            default => 'dashboard-badge-warning',
+        };
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return __('status.' . $this->status);
     }
 }

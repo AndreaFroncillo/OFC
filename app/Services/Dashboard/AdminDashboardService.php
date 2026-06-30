@@ -68,7 +68,8 @@ class AdminDashboardService
             $this->makeLiveStatCard(
                 label: __('kpi.users'),
                 value: $totalUsers,
-                icon: 'fas fa-users'
+                icon: 'fas fa-users',
+                url: route('users.index')
             ),
 
             $this->makeLiveStatCard(
@@ -213,14 +214,14 @@ class AdminDashboardService
         return Booking::whereDate('created_at', Carbon::yesterday())->count();
     }
 
-    private function makeLiveStatCard(string $label, int|float|string $value, string $icon): array
+    private function makeLiveStatCard(string $label, int|float|string $value, string $icon, string $url = '#'): array
     {
         return [
             'label' => $label,
             'value' => $value,
             'icon' => $icon,
             'valueClass' => $this->getStatValueClass($value),
-            'url' => '#',
+            'url' => $url,
             'trend' => __('kpi.live'),
             'trendClass' => 'dashboard-stat-trend-success',
             'description' => __('kpi.updated_now'),
@@ -233,14 +234,15 @@ class AdminDashboardService
         string $icon,
         int $trend,
         string $description,
-        int|float|null $rawValue = null
+        int|float|null $rawValue = null,
+        string $url = '#'
     ): array {
         return [
             'label' => $label,
             'value' => $value,
             'icon' => $icon,
             'valueClass' => $this->getStatValueClass($rawValue ?? $value),
-            'url' => '#',
+            'url' => $url,
             'trend' => $this->formatTrend($trend),
             'trendClass' => $this->getTrendClass($trend),
             'description' => $description,

@@ -11,6 +11,10 @@
     justify-content: space-between;
     align-items: center;
     gap: 1.5rem;
+
+    position: relative;
+    z-index: 40;
+    overflow: visible;
 }
 
 .dashboard-topbar-kicker {
@@ -33,6 +37,9 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+
+    position: relative;
+    z-index: 50;
 }
 
 .dashboard-topbar-site-link,
@@ -64,6 +71,8 @@
 
 .dashboard-topbar-profile-wrapper {
     position: relative;
+
+    z-index: 60;
 }
 
 .dashboard-topbar-profile {
@@ -146,7 +155,7 @@
     visibility: hidden;
     transform: translateY(8px);
     transition: all 0.25s ease;
-    z-index: 20;
+    z-index: 1000;
 }
 
 .dashboard-topbar-profile-wrapper.is-open .dashboard-topbar-profile-menu {

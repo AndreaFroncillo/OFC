@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Permission;
 use App\Traits\HasCode;
 use App\Traits\HasLocalizedDates;
 use App\Traits\HasUuid;
@@ -25,6 +26,11 @@ class Role extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
     }
 
     public function getLabelAttribute(): string

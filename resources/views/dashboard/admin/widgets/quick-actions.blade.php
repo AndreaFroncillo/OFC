@@ -8,7 +8,7 @@
     </div>
 
     <div class="dashboard-quick-actions-grid">
-        <a href="#" class="dashboard-quick-action">
+        <a href="{{route('users.create')}}" class="dashboard-quick-action">
             <i class="fas fa-user-plus"></i>
             <span>{{__('quick.new_user')}}</span>
         </a>

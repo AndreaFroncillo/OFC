@@ -26,3 +26,18 @@
 .iti__selected-dial-code {
     padding-left: 8px;
 }
+
+/* =======================================================
+   SUBMIT LOADING
+======================================================= */
+
+[data-submit-button].is-loading {
+    opacity: .7;
+    cursor: not-allowed;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+
+[data-submit-button].is-loading i {
+    opacity: .6;
+}

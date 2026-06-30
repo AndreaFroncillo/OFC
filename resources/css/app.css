@@ -35,6 +35,7 @@
 
 /* Form, Login, Register, Intl Tel Input */
 @import './forms.css';
+@import './phone-input.css';
 
 /* Footer */
 @import './footer.css';
@@ -43,3 +44,9 @@
 @import './dashboard-sidebar.css';
 @import './dashboard-topbar.css';
 @import './dashboard-widgets.css';
+
+/*  Menagement User */
+@import './management.css';
+
+/* Breadcrumb */
+@import './breadcrumb.css';

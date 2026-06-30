@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             TrainerSeeder::class,
             LessonTemplateSeeder::class,
+            PermissionSeeder::class,
         ]);
         // User::factory(10)->create();
 
