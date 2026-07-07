@@ -33,9 +33,11 @@
 /* Homepage, Hero, Sections, Cards */
 @import './public.css';
 
-/* Form, Login, Register, Intl Tel Input */
+/* Form & UI Components */
 @import './forms.css';
+@import './buttons.css';
 @import './phone-input.css';
+@import './pagination.css';
 
 /* Footer */
 @import './footer.css';

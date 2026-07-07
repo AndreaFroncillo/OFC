@@ -25,10 +25,12 @@
                 <option>{{ __('general.all_statuses') }}</option>
             </select>
 
-            <a href="{{ route('users.create') }}" class="management-primary-action">
-                <i class="fas fa-user-plus"></i>
-                <span>{{ __('quick.new_user') }}</span>
-            </a>
+            <x-buttons.button
+                href="{{ route('users.create') }}"
+                variant="primary"
+                icon="fas fa-user-plus">
+                {{ __('quick.new_user') }}
+            </x-buttons.button>
         </div>
 
         <div class="management-users-grid">
@@ -69,15 +71,23 @@
                 </div>
 
                 <div class="management-user-card-actions">
-                    <a href="{{ route('users.show', $user) }}">
-                        <i class="fas fa-eye"></i>
+                    <x-buttons.button
+                        href="{{ route('users.show', $user) }}"
+                        variant="outline"
+                        size="sm"
+                        icon="fas fa-eye"
+                        class="w-100">
                         {{ __('general.view') }}
-                    </a>
+                    </x-buttons.button>
 
-                    <a href="{{ route('users.edit', $user) }}">
-                        <i class="fas fa-pen"></i>
+                    <x-buttons.button
+                        href="{{ route('users.edit', $user) }}"
+                        variant="outline"
+                        size="sm"
+                        icon="fas fa-pen"
+                        class="w-100">
                         {{ __('general.edit') }}
-                    </a>
+                    </x-buttons.button>
                 </div>
             </article>
             @empty
@@ -89,7 +99,9 @@
         </div>
 
         <div class="management-pagination">
-            {{ $users->links() }}
+            {{ $users->links('vendor.pagination.management', [
+                'label' => trans_choice('auth.user', 2),
+            ]) }}
         </div>
     </section>
 </x-layout>

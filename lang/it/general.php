@@ -53,6 +53,7 @@ return [
 
     /*     E      */
     'edit' => 'Modifica',
+    'edit_user' => 'Modifica Utente',
     'enrollment' => 'Iscrizione|Iscrizioni',
     'entries' => 'ingressi',
 
@@ -128,6 +129,7 @@ return [
     'recent_members' => 'Membri recenti',
     'registered' => 'Registrato',
     'registered_user' => 'Utente registrato',
+    'results' => 'risultati',
     'roster' => 'Clienti Seguiti',
 
     /*     S      */
@@ -137,6 +139,7 @@ return [
     'service' => 'Servizio|Servizi',
     'setting' => 'Impostazione|Impostazioni',
     'show_classes' => 'Parti con noi',
+    'showing_items' => 'Mostra da :from a :to di :total :label',
     'single_lesson' => 'Lezione singola|Lezioni singole',
     'status' => 'Stato',
     'street_number' => 'Numero civico',

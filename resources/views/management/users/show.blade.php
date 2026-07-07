@@ -28,15 +28,19 @@
         </div>
 
         <div class="management-toolbar">
-            <a href="{{ route('users.index') }}" class="management-primary-action">
-                <i class="fas fa-arrow-left"></i>
-                <span>{{ __('general.back') }}</span>
-            </a>
+            <x-buttons.button
+                href="{{ route('users.index') }}"
+                variant="primary"
+                icon="fas fa-arrow-left">
+                {{ __('general.back') }}
+            </x-buttons.button>
 
-            <a href="{{ route('users.edit', $user) }}" class="management-primary-action">
-                <i class="fas fa-pen"></i>
-                <span>{{ __('general.edit') }}</span>
-            </a>
+            <x-buttons.button
+                href="{{ route('users.edit', $user) }}"
+                variant="primary"
+                icon="fas fa-pen">
+                {{ __('general.edit') }}
+            </x-buttons.button>
         </div>
 
         <div class="management-detail-grid">

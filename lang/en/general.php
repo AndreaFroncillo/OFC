@@ -53,6 +53,7 @@ return [
 
     /*     E      */
     'edit' => 'Edit',
+    'edit_user' => 'Edit User',
     'enrollment' => 'Membership|Memberships', // 'Enrollment|Enrollments', => Altra traduzione
     'entries' => 'Entries',
 
@@ -128,6 +129,7 @@ return [
     'recent_members' => 'Recent members',
     'registered' => 'Registered',
     'registered_user' => 'Registered User',
+    'results' => 'results',
     'roster' => 'Roster',
 
     /*     S      */
@@ -137,6 +139,7 @@ return [
     'service' => 'Service|Services',
     'setting' => 'Setting|Settings',
     'show_classes' => 'Start your journey',
+    'showing_items' => 'Showing from :from to :to of :total :label',
     'single_lesson' => 'Single Day Pass|Day Passes',
     'status' => 'Status',
     'street_number' => 'Street Number',

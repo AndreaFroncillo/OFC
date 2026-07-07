@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Management\StoreUserRequest;
+use App\Http\Requests\Management\UpdateUserRequest;
 use App\Models\User;
 use App\Support\Generators\PasswordGenerator;
-use Hash;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -66,18 +65,23 @@ class UserController extends Controller
         return view('management.users.show', compact('user'));
     }
 
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('management.users.edit', compact('user'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+        $user->update($validated);
+
+        return redirect()->route('users.show', $user)->with('success', __('auth.updated'));
     }
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        // 
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', __('auth.deleted'));
     }
 }

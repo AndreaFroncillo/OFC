@@ -1,0 +1,72 @@
+.app-pagination {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(255, 0, 110, 0.08);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.app-pagination-summary {
+    margin-bottom: 0;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.app-pagination-links {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.app-pagination-link {
+    min-width: 38px;
+    height: 38px;
+    border-radius: 13px;
+    padding: 0 0.65rem;
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255, 0, 110, 0.08);
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.app-pagination-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(255, 0, 110, 0.12);
+}
+
+.app-pagination-link.is-active {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--w);
+    border-color: transparent;
+}
+
+.app-pagination-link.is-disabled {
+    opacity: .45;
+    pointer-events: none;
+}
+
+@media (max-width: 767px) {
+    .app-pagination {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .app-pagination-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
