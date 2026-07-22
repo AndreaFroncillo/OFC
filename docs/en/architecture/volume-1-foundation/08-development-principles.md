@@ -139,7 +139,7 @@ Configuration values belong inside the configuration layer rather than inside so
 
 Reusable user interface elements should become Blade Components.
 
-Reusable behaviour should become JavaScript modules.
+Reusable behavior should become JavaScript modules.
 
 Reusable styling should become shared CSS classes.
 
@@ -171,16 +171,20 @@ Developers should think in terms of complete modules rather than isolated files.
 
 A new feature may involve:
 
-- routes;
-- controllers;
-- requests;
-- services;
-- models;
-- views;
-- Blade Components;
-- JavaScript;
-- CSS;
-- documentation.
+```text
+Feature
+   │
+   ├── Routes
+   ├── Controller
+   ├── Form Request
+   ├── Service
+   ├── Model
+   ├── View
+   ├── Blade Components
+   ├── JavaScript
+   ├── CSS
+   └── Documentation
+```
 
 Considering the entire module from the beginning results in a more coherent implementation.
 

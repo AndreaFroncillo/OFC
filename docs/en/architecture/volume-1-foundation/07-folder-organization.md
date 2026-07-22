@@ -79,12 +79,11 @@ Examples include:
 
 ```text
 app/
-
-Http/
-Models/
-Services/
-Support/
-Providers/
+├── Http/
+├── Models/
+├── Providers/
+├── Services/
+└── Support/
 ```
 
 As the project evolves, additional directories may be introduced when justified by architectural requirements.
@@ -99,10 +98,9 @@ Typical directories include:
 
 ```text
 Http/
-
-Controllers/
-Middleware/
-Requests/
+├── Controllers/
+├── Middleware/
+└── Requests/
 ```
 
 Responsibilities:
@@ -149,10 +147,9 @@ Examples include:
 
 ```text
 Support/
-
-Generators/
-Helpers/
-Utilities/
+├── Generators/
+├── Helpers/
+└── Utilities/
 ```
 
 The PasswordGenerator introduced during the Users Management milestone is an example of this approach.
@@ -184,10 +181,9 @@ Examples include:
 
 ```text
 resources/
-
-css/
-js/
-views/
+├── css/
+├── js/
+└── views/
 ```
 
 Each area evolves independently while following shared conventions.
@@ -208,14 +204,13 @@ Example structure:
 
 ```text
 components/
-
-buttons/
-forms/
-dashboard/
-tables/
-cards/
-alerts/
-badges/
+├── alerts/
+├── badges/
+├── buttons/
+├── cards/
+├── dashboard/
+├── forms/
+└── tables/
 ```
 
 Whenever a UI element becomes reusable, it should evolve into a Blade Component.
@@ -230,13 +225,12 @@ Examples include:
 
 ```text
 css/
-
-forms.css
-management.css
-dashboard-topbar.css
-phone-input.css
-utilities.css
-variables.css
+├── forms.css
+├── management.css
+├── dashboard-topbar.css
+├── phone-input.css
+├── utilities.css
+└── variables.css
 ```
 
 Each stylesheet has a clearly defined responsibility.
@@ -251,21 +245,12 @@ Example:
 
 ```text
 js/
-
-forms/
-dashboard/
+└── forms/
+    ├── phone-input.js
+    └── prevent-double-submit.js
 ```
 
 Each module contains a single behavior.
-
-Examples:
-
-```text
-forms/
-
-phone-input.js
-prevent-double-submit.js
-```
 
 Modules should remain small, reusable and independent.
 

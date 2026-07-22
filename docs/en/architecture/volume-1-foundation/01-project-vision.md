@@ -26,7 +26,7 @@ Project: Olimpia Club House
 
 Olimpia Club House is designed as a modular software platform for the management of gyms, sports clubs and fitness centers.
 
-The project does not aim simply to digitize administrative operations. Its primary objective is to build a scalable ecosystem capable of supporting every operational aspect of a sports organization throughout its entire lifecycle.
+The project does not aim merely to digitize administrative operations. Its primary objective is to build a scalable ecosystem capable of supporting every operational aspect of a sports organization throughout its entire lifecycle.
 
 From user registration to lesson booking, from subscription management to financial reporting, every module is conceived as part of a single coherent platform.
 
@@ -56,7 +56,7 @@ The long-term objective is to evolve Olimpia Club House into a complete manageme
 
 Each module should be capable of evolving independently while preserving compatibility with the rest of the system.
 
-Future development must never require redesigning existing architecture.
+Future development should not require redesigning the existing architecture.
 
 Instead, the software should naturally accommodate new modules, new workflows and new business requirements.
 

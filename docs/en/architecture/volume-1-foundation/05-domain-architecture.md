@@ -261,7 +261,7 @@ Business terminology becomes the common language shared by both technical and no
 
 As the project grows, each domain described in this chapter will be documented individually within the Backend and Business volumes.
 
-Future chapters will describe implementation details, workflows and architectural decisions for every domain.
+Future architectural volumes will progressively describe the implementation strategies, workflows and architectural decisions related to these domains.
 
 This chapter intentionally remains technology-independent.
 
@@ -291,7 +291,7 @@ New features should always be associated with an existing domain or justify the 
 
 ### Previous
 
-- High Level Architecture
+- High-Level Architecture
 
 ### Next
 

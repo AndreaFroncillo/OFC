@@ -52,6 +52,24 @@ This organization improves readability, maintainability and scalability.
 
 The application is divided into five primary layers.
 
+```text
+Presentation
+      │
+      ▼
+Application
+      │
+      ▼
+Business
+      │
+      ▼
+Domain
+      │
+      ▼
+Infrastructure
+```
+
+Each layer builds upon the services provided by the layer below while exposing a clear and well-defined responsibility.
+
 ## Presentation Layer
 
 The Presentation Layer is responsible for everything the user sees.
@@ -115,7 +133,7 @@ Its responsibilities include:
 - relationships;
 - business state;
 - helper methods;
-- domain behaviour.
+- domain behavior.
 
 The domain represents the language of the business rather than database implementation.
 

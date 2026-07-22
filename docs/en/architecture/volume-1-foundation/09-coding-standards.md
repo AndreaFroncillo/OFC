@@ -96,6 +96,8 @@ sendWelcomeEmail()
 
 Developers should be able to understand a method's purpose without reading its implementation.
 
+Well-designed methods reduce the need for additional documentation.
+
 ---
 
 # Variable Naming
@@ -190,7 +192,7 @@ Templates should remain readable and easy to maintain.
 
 JavaScript should remain modular.
 
-Each module should implement a single behaviour.
+Each module should implement a single behavior.
 
 Examples include:
 
@@ -219,6 +221,8 @@ Consistency across the interface is considered a primary objective.
 Whenever a new architectural pattern is introduced, the Software Architecture Documentation should be updated.
 
 Documentation is considered part of the implementation rather than an optional activity.
+
+Documentation should evolve together with the codebase.
 
 ---
 

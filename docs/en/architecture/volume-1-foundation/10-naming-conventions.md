@@ -107,6 +107,7 @@ The class name should indicate both the action and the resource.
 
 Services should end with the `Service` suffix whenever they represent business workflows.
 
+
 Examples:
 
 ```text
@@ -115,6 +116,8 @@ RevenueService
 BookingService
 NotificationService
 ```
+
+This convention improves discoverability and architectural consistency.
 
 Small reusable utilities may omit the suffix when a more expressive name exists.
 
@@ -191,7 +194,7 @@ Avoid page-specific names whenever possible.
 
 # JavaScript
 
-JavaScript modules should describe a single behaviour.
+JavaScript modules should describe a single behavior.
 
 Examples:
 
@@ -307,6 +310,8 @@ $value
 $item
 ```
 
+Variable names should communicate business meaning rather than implementation details.
+
 ---
 
 # Methods
@@ -382,6 +387,8 @@ Examples:
 
 04-high-level-architecture.md
 ```
+
+The numeric prefix preserves the intended reading order of the documentation.
 
 Each chapter should include a unique Document ID.
 

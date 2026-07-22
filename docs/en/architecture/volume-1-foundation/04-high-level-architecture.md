@@ -1,5 +1,5 @@
 ---
-Title: High Level Architecture
+Title: High-Level Architecture
 
 Document ID: V1-04
 
@@ -20,7 +20,7 @@ Author: Andrea Froncillo
 Project: Olimpia Club House
 ---
 
-# High Level Architecture
+# High-Level Architecture
 
 ## Purpose
 
@@ -44,7 +44,7 @@ The architecture is intentionally designed so that new modules can be introduced
 
 ---
 
-# Main Layers
+# Architectural Layers
 
 The platform is divided into five primary architectural layers.
 
@@ -120,7 +120,7 @@ Models describe the application's business concepts rather than database tables.
 
 The Infrastructure Layer manages interaction with external systems.
 
-Examples include:
+Typical infrastructure services include::
 
 - Database
 - Storage
@@ -184,13 +184,27 @@ This approach simplifies maintenance and future expansion.
 
 A typical request follows this flow:
 
-1. Route
-2. Middleware
-3. Controller
-4. Form Request
-5. Service
-6. Model
-7. View / Response
+```text
+Route
+   │
+   ▼
+Middleware
+   │
+   ▼
+Controller
+   │
+   ▼
+Form Request
+   │
+   ▼
+Service
+   │
+   ▼
+Model
+   │
+   ▼
+View / Response
+```
 
 Each layer performs a specific responsibility before delegating execution to the next one.
 
