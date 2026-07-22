@@ -18,8 +18,18 @@
         </div>
 
         <div class="management-toolbar">
-            <x-buttons.button href="{{ route('users.show', $user) }}" variant="primary" icon="fas fa-arrow-left">
-                {{ __('general.back') }}
+            <x-buttons.button
+                href="{{ route('users.show', $user) }}"
+                variant="primary"
+                icon="fas fa-user">
+                {{ $user->name }} {{ $user->surname }}
+            </x-buttons.button>
+
+            <x-buttons.button
+                href="{{ route('users.index') }}"
+                variant="secondary"
+                icon="fas fa-list">
+                {{ __('general.back_to_list') }}
             </x-buttons.button>
         </div>
 
@@ -89,9 +99,6 @@
             </div>
 
             <div class="management-form-actions">
-                <x-buttons.button href="{{ route('users.show', $user) }}" variant="secondary">
-                    {{ __('general.cancel') }}
-                </x-buttons.button>
 
                 <x-buttons.button type="submit" variant="primary" icon="fas fa-pen">
                     {{ __('general.edit') }}

@@ -21,6 +21,7 @@ return [
 
     /*     B      */
     'back' => 'Back',
+    'back_to_list' => 'Back to list',
     'bia' => 'Body Composition Analysis (BIA)',
     'birth_date' => 'Born at',
     'body' => 'Body',
@@ -38,6 +39,7 @@ return [
     'city' => 'City',
     'class' => 'Class|Classes',
     'class_history' => 'Class History',
+    'confirm_delete' => 'Are you sure you want to delete this item?',
     'contacts_info' => 'Info',
     'content_web_site' => 'Website content & Translations',
     'country' => 'Country',
@@ -49,6 +51,7 @@ return [
 
     /*     D      */
     'daily_agenda' => 'Daily agenda',
+    'delete' => 'Delete',
     'description' => 'Reach your goals with our personalized programs and the guidance of the best professional trainers',
 
     /*     E      */
@@ -165,5 +168,5 @@ return [
 
     /*     Y      */
 
-    /*     Z      */     
+    /*     Z      */
 ];

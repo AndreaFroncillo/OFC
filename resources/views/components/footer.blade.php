@@ -20,7 +20,7 @@
 
         <!-- Section: Form -->
         <section class="">
-            <form action="">
+            <form action="" data-prevent-double-submit>
                 <!--Grid row-->
                 <div class="row d-flex justify-content-center">
                     <!--Grid column-->
@@ -44,9 +44,13 @@
                     <!--Grid column-->
                     <div class="col-auto">
                         <!-- Submit button -->
-                        <button data-mdb-ripple-init type="submit" class="btn btn-footer-custom text-black">
-                            {{__('mail.subscribe')}}
-                        </button>
+                        <x-buttons.button
+                            type="submit"
+                            variant="footer"
+                            class="text-black"
+                            data-mdb-ripple-init>
+                            {{ __('mail.subscribe') }}
+                        </x-buttons.button>
                     </div>
                     <!--Grid column-->
                 </div>

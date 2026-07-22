@@ -12,7 +12,7 @@ $groupClass = $variant === 'management'
 : 'mb-3 flex-fill';
 @endphp
 
-<div class="{{ $groupClass }} {{ $full ? 'management-form-group-full' : '' }}"">
+<div class="{{ $groupClass }} {{ $full ? 'management-form-group-full' : '' }}">
     @if($label)
     <label for="{{ $name }}">
         {{ $label }}

@@ -97,3 +97,82 @@
     border-radius: 18px;
     padding: 0 1.25rem;
 }
+
+.app-button-public-primary {
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    margin: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 4;
+}
+
+.app-button-public-primary:hover {
+    color: var(--w);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 0, 110, 0.4);
+}
+
+.app-button-public-primary:active {
+    color: var(--w);
+    box-shadow: 0 6px 16px rgba(255, 0, 110, 0.3);
+}
+
+.app-button-public-outline {
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    background: transparent;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 4;
+}
+
+.app-button-public-outline:hover {
+    background: var(--accent-color);
+    color: var(--dark-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 190, 11, 0.4);
+    position: relative;
+    z-index: 4;
+}
+
+.app-button-footer {
+    min-height: unset;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    padding: 5px 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 4;
+}
+
+.app-button-footer:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 0, 110, 0.4);
+    position: relative;
+    z-index: 4;
+}

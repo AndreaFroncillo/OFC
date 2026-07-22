@@ -21,6 +21,7 @@ return [
 
     /*     B      */
     'back' => 'Indietro',
+    'back_to_list' => 'Torna all’elenco',
     'bia' => 'Analisi Composizione Corporea (BIA)',
     'birth_date' => 'Nato il',
     'body' => 'Corpo',
@@ -38,6 +39,7 @@ return [
     'city' => 'Comune',
     'class' => 'Corso|Corsi',
     'class_history' => 'Storico Lezioni',
+    'confirm_delete' => 'Sei sicuro di voler eliminare questo elemento?',
     'contacts_info' => 'Contatti',
     'content_web_site' => 'Traduzioni e contenuto',
     'country' => 'Nazione',
@@ -49,6 +51,7 @@ return [
 
     /*     D      */
     'daily_agenda' => 'Agenda giornaliera',
+    'delete' => 'Elimina',
     'description' => 'Raggiungi i tuoi obiettivi con i nostri programmi personalizzati e la guida dei migliori trainer professionali',
 
     /*     E      */

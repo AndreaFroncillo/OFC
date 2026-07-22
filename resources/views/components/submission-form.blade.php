@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-6"></div>
         </div>
-        <form class="flex-fill d-flex flex-column">
+        <form class="flex-fill d-flex flex-column" data-prevent-double-submit>
             @csrf
             <div class="mb-3 flex-fill">
                 <input type="tel" name="phone" class="form-control" placeholder="{{__('form.phone')}}" required>
@@ -44,7 +44,12 @@
                     <option value="riabilitazione">{{__('form.rehabilitation')}}</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary-custom w-100 text-b">{{__('form.subscribe_now')}}</button>
+            <x-buttons.button
+                type="submit"
+                variant="public-primary"
+                class="w-100 text-b">
+                {{ __('form.subscribe_now') }}
+            </x-buttons.button>
         </form>
     </div>
 </div>

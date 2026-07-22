@@ -88,6 +88,19 @@
                         class="w-100">
                         {{ __('general.edit') }}
                     </x-buttons.button>
+
+                    <x-actions.delete
+                        :action="route('users.destroy', $user)"
+                        class="w-100">
+                        <x-buttons.button
+                            type="submit"
+                            variant="danger"
+                            size="sm"
+                            icon="fas fa-trash"
+                            class="w-100">
+                            {{ __('general.delete') }}
+                        </x-buttons.button>
+                    </x-actions.delete>
                 </div>
             </article>
             @empty

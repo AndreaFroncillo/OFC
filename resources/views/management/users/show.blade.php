@@ -31,8 +31,8 @@
             <x-buttons.button
                 href="{{ route('users.index') }}"
                 variant="primary"
-                icon="fas fa-arrow-left">
-                {{ __('general.back') }}
+                icon="fas fa-list">
+                {{ __('general.back_to_list') }}
             </x-buttons.button>
 
             <x-buttons.button
@@ -41,6 +41,9 @@
                 icon="fas fa-pen">
                 {{ __('general.edit') }}
             </x-buttons.button>
+
+            <x-actions.delete
+                :action="route('users.destroy', $user)" />
         </div>
 
         <div class="management-detail-grid">

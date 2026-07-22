@@ -5,7 +5,7 @@
                 <h3 class="mb-4 text-b section-title">{{ __('auth.register_now') }}</h3>
                 <div class="col-lg-6">
                     <div class="form-container">
-                        <form method="POST" action="{{route('register')}}">
+                        <form method="POST" action="{{route('register')}}" data-prevent-double-submit>
                             @csrf
                             <div class="mb-3">
                                 <input type="text" class="form-control" placeholder="{{ __('form.name') }}" name="name" value="{{ old('name') }}" required>
@@ -22,7 +22,12 @@
                             <div class="mb-3">
                                 <input type="password" class="form-control" placeholder="{{ __('form.confirm_password') }}" name="password_confirmation" required>
                             </div>
-                            <button type="submit" class="btn btn-primary-custom w-100 text-b">{{__('auth.register')}}</button>
+                            <x-buttons.button
+                                type="submit"
+                                variant="public-primary"
+                                class="w-100 text-b">
+                                {{ __('auth.register') }}
+                            </x-buttons.button>
                             <p class="text-muted mt-3 text-center">{{__('auth.already_have_account')}} <a href="{{ route('login') }}" class="text-warning">{{__('auth.login_here')}}</a></p>
                         </form>
                     </div>
